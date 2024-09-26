@@ -18,6 +18,10 @@ public class Card {
         return value;
     }
 
+    public String getRank() {
+        return rank;
+    }
+
     // A 牌可以根据需要切换为 1 或 11
     public void setAceValue(int newValue) {
         if (Objects.equals(rank, ACE)) {

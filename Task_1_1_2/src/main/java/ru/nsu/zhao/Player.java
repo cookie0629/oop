@@ -26,6 +26,23 @@ public class Player {
 
     // 返回当前得分
     public int getScore() {
+        int score = 0;
+        int aceCount = 0;
+
+        // 计算当前得分并统计 Ace 的数量
+        for (Card card : hand) {
+            score += card.getValue();
+            if (card.getRank().equals("Туз")) { // 判断是否为 Ace
+                aceCount++;
+            }
+        }
+
+        // 如果分数大于 21，并且手牌中有 Ace，则将 Ace 的值从 11 调整为 1
+        while (score > 21 && aceCount > 0) {
+            score -= 10;  // 每次调整一个 Ace 的值从 11 变成 1
+            aceCount--;
+        }
+
         return score;
     }
 

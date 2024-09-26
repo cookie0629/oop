@@ -31,12 +31,18 @@ public class BlackjackGame {
 
         // 玩家回合
         boolean playerContinue = true;
-        while (playerContinue && player.getScore() <= 21) {
+        while (playerContinue) {
             System.out.println("Введите “1”, чтобы взять карту, и “0”, чтобы остановиться...");
             int action = scanner.nextInt();
             if (action == 1) {
                 player.addCard(deck.dealCard());
                 System.out.println(player);
+
+                // 检查玩家是否爆牌
+                if (player.getScore() > 21) {
+                    System.out.println("Ваш счет больше 21. Вы проиграли!");
+                    return;  // 直接结束游戏
+                }
             } else {
                 playerContinue = false;
             }
