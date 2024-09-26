@@ -5,12 +5,12 @@ import java.util.Scanner;
 public class BlackjackGame {
     private final Deck deck;
     private final Player player;
-    private final Dealer dealer;
+    private final Player dealer;
 
     public BlackjackGame() {
         deck = new Deck();
-        player = new Player();
-        dealer = new Dealer();
+        player = new Player(false);  // 玩家不是庄家
+        dealer = new Player(true);   // 庄家
     }
 
     public void startGame() {
@@ -38,7 +38,7 @@ public class BlackjackGame {
                 player.addCard(deck.dealCard());
                 System.out.println(player);
 
-                // 检查玩家是否爆牌
+                // 如果玩家爆牌，游戏结束
                 if (player.getScore() > 21) {
                     System.out.println("Ваш счет больше 21. Вы проиграли!");
                     return;  // 直接结束游戏
@@ -59,9 +59,7 @@ public class BlackjackGame {
         }
 
         // 判断输赢
-        if (player.getScore() > 21) {
-            System.out.println("Вы проиграли!");
-        } else if (dealer.getScore() > 21 || player.getScore() > dealer.getScore()) {
+        if (dealer.getScore() > 21 || player.getScore() > dealer.getScore()) {
             System.out.println("Вы выиграли!");
         } else if (player.getScore() == dealer.getScore()) {
             System.out.println("Ничья!");

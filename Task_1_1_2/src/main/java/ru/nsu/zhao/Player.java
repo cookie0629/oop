@@ -4,27 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    protected List<Card> hand;
-    protected int score;
+    private final List<Card> hand;  // 玩家/庄家的手牌
+    private final boolean isDealer; // 用于区分玩家和庄家
+    private Card faceDownCard;      // 庄家的盖牌（仅当是庄家时有用）
 
-    public Player() {
-        hand = new ArrayList<>();
-        score = 0;
+    public Player(boolean isDealer) {
+        this.hand = new ArrayList<>();
+        this.isDealer = isDealer;
     }
 
-    // 添加一张牌到手牌
+    // 添加手牌，庄家可以选择是否有盖牌
+    public void addCard(Card card, boolean isFaceDown) {
+        if (isDealer && isFaceDown) {
+            this.faceDownCard = card;
+        } else {
+            this.hand.add(card);
+        }
+    }
+
+    // 添加明牌
     public void addCard(Card card) {
-        hand.add(card);
-        updateScore(card);
+        addCard(card, false);  // 默认是明牌
     }
 
-    // 更新得分
-    protected void updateScore(Card card) {
-        score += card.getValue();
-        adjustForAce();
+    // 亮出盖牌
+    public void revealFaceDownCard() {
+        if (this.faceDownCard != null) {
+            this.hand.add(faceDownCard);  // 将盖牌加入到手牌中
+            this.faceDownCard = null;     // 重置盖牌
+        }
     }
 
-    // 返回当前得分
+    // 计算手牌的总分，自动调整 Ace 的值
     public int getScore() {
         int score = 0;
         int aceCount = 0;
@@ -46,18 +57,17 @@ public class Player {
         return score;
     }
 
-    // 处理A牌的特殊情况
-    protected void adjustForAce() {
-        for (Card card : hand) {
-            if (score > 21 && card.getValue() == 11) {
-                score -= 10;  // 将A从11变为1
-            }
-        }
+    // 庄家在得分小于 17 时必须继续抽牌
+    public boolean mustDrawCard() {
+        return isDealer && getScore() < 17;
     }
 
-    // 返回手牌内容
     @Override
     public String toString() {
-        return "Ваши карты: " + hand.toString() + " => " + score;
+        if (isDealer && this.faceDownCard != null) {
+            return "Ваши карты: " + hand + ", <закрытая карта>";  // 显示有一张盖牌
+        } else {
+            return "Ваши карты: " + hand + " => " + getScore();  // 显示手牌和得分
+        }
     }
 }
