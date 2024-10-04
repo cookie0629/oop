@@ -1,29 +1,33 @@
 package ru.nsu.zhao;
 
-public class Number implements Expression {
-    private final int value;
+// 表示一个常量数字
+public class Number extends Expression {
+    private int value;
 
     public Number(int value) {
         this.value = value;
     }
 
     @Override
-    public void print(java.io.PrintStream out) {
-        out.print(value);
+    public void print() {
+        System.out.print(value);
     }
 
     @Override
-    public Expression derivative(String var) {
-        return new Number(0); // 常数的导数为 0
+    public Expression derivative(String variable) {
+        // 常量的微分为 0
+        return new Number(0);
     }
 
     @Override
-    public int eval(String vars) {
-        return value; // 数值直接返回
+    public int eval(java.util.Map<String, Integer> variables) {
+        return value;
     }
 
     @Override
     public Expression simplify() {
-        return this; // 常量已经是最简形式
+        // 常量无法再简化，直接返回自己
+        return this;
     }
 }
+
