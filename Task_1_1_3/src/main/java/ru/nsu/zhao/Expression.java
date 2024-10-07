@@ -14,4 +14,3 @@ public abstract class Expression {
     // 简化表达式
     public abstract Expression simplify();
 }
-

@@ -2,7 +2,7 @@ package ru.nsu.zhao;
 
 // 表示一个变量
 public class Variable extends Expression {
-    private String name;
+    private final String name;
 
     public Variable(String name) {
         this.name = name;

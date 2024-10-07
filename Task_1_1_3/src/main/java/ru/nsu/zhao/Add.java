@@ -2,8 +2,8 @@ package ru.nsu.zhao;
 
 // 表示两个表达式的加法
 public class Add extends Expression {
-    private Expression left;
-    private Expression right;
+    private final Expression left;
+    private final Expression right;
 
     public Add(Expression left, Expression right) {
         this.left = left;
@@ -46,4 +46,3 @@ public class Add extends Expression {
         return new Add(simplifiedLeft, simplifiedRight);
     }
 }
-

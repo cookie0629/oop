@@ -1,6 +1,5 @@
 package ru.nsu.zhao;
 
-// 用于测试上述功能的测试类
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,5 +32,3 @@ public class TestExpression {
         System.out.println();
     }
 }
-
-

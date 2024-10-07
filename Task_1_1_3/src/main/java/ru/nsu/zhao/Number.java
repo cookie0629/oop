@@ -2,7 +2,7 @@ package ru.nsu.zhao;
 
 // 表示一个常量数字
 public class Number extends Expression {
-    private int value;
+    private final int value;
 
     public Number(int value) {
         this.value = value;
