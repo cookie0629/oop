@@ -36,12 +36,6 @@ public class Add extends Expression {
         Expression simplifiedLeft = left.simplify();
         Expression simplifiedRight = right.simplify();
 
-        // 如果两侧都为常量，则直接返回常量的和
-        if (simplifiedLeft instanceof Number && simplifiedRight instanceof Number) {
-            int result = ((Number) simplifiedLeft).eval(null) + ((Number) simplifiedRight).eval(null);
-            return new Number(result);
-        }
-
         // 否则返回简化后的加法表达式
         return new Add(simplifiedLeft, simplifiedRight);
     }

@@ -30,4 +30,3 @@ public class Number extends Expression {
         return this;
     }
 }
-

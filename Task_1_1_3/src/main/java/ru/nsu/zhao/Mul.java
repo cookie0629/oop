@@ -34,13 +34,6 @@ public class Mul extends Expression {
     public Expression simplify() {
         Expression simplifiedLeft = left.simplify();
         Expression simplifiedRight = right.simplify();
-
-//        if (simplifiedLeft instanceof Number && simplifiedRight instanceof Number) {
-//            int result = ((Number) simplifiedLeft).eval(null) * ((Number) simplifiedRight).eval(null);
-//            return new Number(result);
-//        }
-
         return new Mul(simplifiedLeft, simplifiedRight);
     }
 }
-
