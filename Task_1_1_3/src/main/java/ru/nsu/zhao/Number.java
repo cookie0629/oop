@@ -3,7 +3,6 @@ package ru.nsu.zhao;
 // 表示一个常量数字
 public class Number extends Expression {
     private final int value;
-
     public Number(int value) {
         this.value = value;
     }
@@ -15,7 +14,7 @@ public class Number extends Expression {
 
     @Override
     public Expression derivative(String variable) {
-        // 常量的微分为 0
+        // 常量的积分为 0
         return new Number(0);
     }
 
