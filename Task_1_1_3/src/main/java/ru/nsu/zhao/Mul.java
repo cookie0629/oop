@@ -22,7 +22,8 @@ public class Mul extends Expression {
     @Override
     public Expression derivative(String variable) {
         // (f * g)' = f' * g + f * g'
-        return new Add(new Mul(left.derivative(variable), right), new Mul(left, right.derivative(variable)));
+        return new Add(new Mul(left.derivative(variable), right),
+                new Mul(left, right.derivative(variable)));
     }
 
     @Override
