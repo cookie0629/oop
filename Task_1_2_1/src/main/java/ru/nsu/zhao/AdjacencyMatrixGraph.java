@@ -1,10 +1,9 @@
 package ru.nsu.zhao;
-
 import java.util.*;
 
 public class AdjacencyMatrixGraph implements Graph {
     private final Map<String, Integer> vertexIndexMap; // 顶点与索引的映射
-    private final List<String> vertices; // 存储顶点列表
+    private final List<String> vertices; // 顶点列表
     private int[][] adjacencyMatrix; // 邻接矩阵
 
     public AdjacencyMatrixGraph() {
@@ -28,13 +27,13 @@ public class AdjacencyMatrixGraph implements Graph {
     public void removeVertex(String vertex) {
         if (vertexIndexMap.containsKey(vertex)) {
             int index = vertexIndexMap.get(vertex);
-            vertices.remove(index);
+            vertices.remove(vertex);
             vertexIndexMap.remove(vertex);
             shrinkMatrix(index);
         }
     }
 
-    // 添加边缘
+    // 添加边
     @Override
     public void addEdge(String vertex1, String vertex2) {
         if (vertexIndexMap.containsKey(vertex1) && vertexIndexMap.containsKey(vertex2)) {
@@ -44,7 +43,7 @@ public class AdjacencyMatrixGraph implements Graph {
         }
     }
 
-    // 删除边缘
+    // 删除边
     @Override
     public void removeEdge(String vertex1, String vertex2) {
         if (vertexIndexMap.containsKey(vertex1) && vertexIndexMap.containsKey(vertex2)) {
@@ -69,16 +68,15 @@ public class AdjacencyMatrixGraph implements Graph {
         return neighbors;
     }
 
-    // 从文件中读取图 (待实现)
+    // 从文件中读取图
     @Override
     public void readFromFile(String filePath) {
-        // 实现从固定格式的文件中读取图的逻辑
+        // 实现从文件读取图的逻辑
     }
 
     // 拓扑排序
     @Override
     public List<String> topologicalSort() {
-        // 使用Kahn算法实现拓扑排序
         List<String> sorted = new ArrayList<>();
         Map<String, Integer> inDegree = new HashMap<>();
         for (String v : vertices) {
@@ -130,6 +128,15 @@ public class AdjacencyMatrixGraph implements Graph {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    // 检查两个图是否相等
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        AdjacencyMatrixGraph that = (AdjacencyMatrixGraph) obj;
+        return Arrays.deepEquals(adjacencyMatrix, that.adjacencyMatrix) && Objects.equals(vertices, that.vertices);
     }
 
     // 扩展邻接矩阵
