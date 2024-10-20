@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class AdjacencyMatrixGraph implements Graph {
     private int[][] matrix;
@@ -81,6 +83,39 @@ public class AdjacencyMatrixGraph implements Graph {
     }
 
     @Override
+    public List<Integer> topologicalSort() {
+        int[] inDegree = new int[size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (matrix[i][j] == 1) {
+                    inDegree[j]++;
+                }
+            }
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < size; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+
+        List<Integer> topoOrder = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            int vertex = queue.poll();
+            topoOrder.add(vertex);
+            for (int i = 0; i < size; i++) {
+                if (matrix[vertex][i] == 1) {
+                    inDegree[i]--;
+                    if (inDegree[i] == 0) {
+                        queue.add(i);
+                    }
+                }
+            }
+        }
+        return topoOrder.size() == size ? topoOrder : null;
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < size; i++) {
@@ -107,4 +142,3 @@ public class AdjacencyMatrixGraph implements Graph {
         return true;
     }
 }
-

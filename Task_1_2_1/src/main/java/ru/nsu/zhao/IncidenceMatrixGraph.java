@@ -3,24 +3,26 @@ package ru.nsu.zhao;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class IncidenceMatrixGraph implements Graph {
     private int[][] incidenceMatrix;
     private int vertexCount;
     private int edgeCount;
+    private Map<Integer, Integer> edgeMap; // Maps edges to indices in the incidence matrix
 
     public IncidenceMatrixGraph(int vertexCount, int edgeCount) {
         this.vertexCount = vertexCount;
         this.edgeCount = edgeCount;
         incidenceMatrix = new int[vertexCount][edgeCount];
+        edgeMap = new HashMap<>();
     }
 
     @Override
     public void addVertex(int vertex) {
-        // 在关联矩阵中，顶点数目是固定的，所以无法动态添加
-        throw new UnsupportedOperationException("Vertex count is fixed in Incidence Matrix.");
+        if (vertex >= vertexCount) {
+            throw new IllegalArgumentException("Vertex index out of bounds.");
+        }
     }
 
     @Override
@@ -32,8 +34,9 @@ public class IncidenceMatrixGraph implements Graph {
     public void addEdge(int from, int to) {
         for (int i = 0; i < edgeCount; i++) {
             if (incidenceMatrix[from][i] == 0 && incidenceMatrix[to][i] == 0) {
-                incidenceMatrix[from][i] = 1;
-                incidenceMatrix[to][i] = -1;
+                incidenceMatrix[from][i] = 1; // From vertex
+                incidenceMatrix[to][i] = -1; // To vertex
+                edgeMap.put(edgeMap.size(), i);
                 break;
             }
         }
@@ -45,6 +48,7 @@ public class IncidenceMatrixGraph implements Graph {
             if (incidenceMatrix[from][i] == 1 && incidenceMatrix[to][i] == -1) {
                 incidenceMatrix[from][i] = 0;
                 incidenceMatrix[to][i] = 0;
+                edgeMap.remove(i);
                 break;
             }
         }
@@ -69,17 +73,61 @@ public class IncidenceMatrixGraph implements Graph {
     public void readFromFile(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            int row = 0;
+            List<int[]> edges = new ArrayList<>();
             while ((line = reader.readLine()) != null) {
-                String[] values = line.split(" ");
-                for (int col = 0; col < values.length; col++) {
-                    incidenceMatrix[row][col] = Integer.parseInt(values[col]);
-                }
-                row++;
+                String[] vertices = line.split(" ");
+                int from = Integer.parseInt(vertices[0]);
+                int to = Integer.parseInt(vertices[1]);
+                edges.add(new int[]{from, to});
+            }
+            // Update vertexCount and edgeCount based on edges read
+            edgeCount = edges.size();
+            for (int[] edge : edges) {
+                addVertex(edge[0]);
+                addVertex(edge[1]);
+                addEdge(edge[0], edge[1]);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Integer> topologicalSort() {
+        int[] inDegree = new int[edgeCount];
+        Map<Integer, Integer> vertexMap = new HashMap<>();
+
+        for (int i = 0; i < vertexCount; i++) {
+            for (int j = 0; j < edgeCount; j++) {
+                if (incidenceMatrix[i][j] == 1) {
+                    inDegree[j]++;
+                    vertexMap.put(j, i);
+                }
+            }
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < edgeCount; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+
+        List<Integer> topoOrder = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            int edgeIndex = queue.poll();
+            int fromVertex = vertexMap.get(edgeIndex);
+            topoOrder.add(fromVertex);
+            for (int j = 0; j < edgeCount; j++) {
+                if (incidenceMatrix[fromVertex][j] == 1) {
+                    inDegree[j]--;
+                    if (inDegree[j] == 0) {
+                        queue.add(j);
+                    }
+                }
+            }
+        }
+        return topoOrder.size() == vertexCount ? topoOrder : null;
     }
 
     @Override
@@ -99,13 +147,6 @@ public class IncidenceMatrixGraph implements Graph {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         IncidenceMatrixGraph that = (IncidenceMatrixGraph) obj;
-        for (int i = 0; i < vertexCount; i++) {
-            for (int j = 0; j < edgeCount; j++) {
-                if (this.incidenceMatrix[i][j] != that.incidenceMatrix[i][j]) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return Arrays.deepEquals(this.incidenceMatrix, that.incidenceMatrix);
     }
 }
