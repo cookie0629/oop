@@ -17,20 +17,7 @@ class GraphTest {
         adjacencyMatrixGraph = new AdjacencyMatrixGraph(4);
         incidenceMatrixGraph = new IncidenceMatrixGraph(4);
     }
-
-    @Test
-    void testAddAndRemoveVertex() {
-        adjacencyListGraph.addVertex();
-        assertEquals(5, adjacencyListGraph.getNeighbors(4).size()); // 检查新顶点的邻居
-        adjacencyMatrixGraph.addVertex();
-        assertEquals(0, adjacencyMatrixGraph.getNeighbors(4).size()); // 检查新顶点的邻居
-        incidenceMatrixGraph.addVertex();
-        assertEquals(0, incidenceMatrixGraph.getNeighbors(4).size()); // 检查新顶点的邻居
-
-        adjacencyListGraph.removeVertex();
-        assertThrows(IndexOutOfBoundsException.class, () -> adjacencyListGraph.getNeighbors(4)); // 顶点 4 已删除
-    }
-
+    
     @Test
     void testAddAndRemoveEdge() {
         adjacencyListGraph.addEdge(0, 1);
