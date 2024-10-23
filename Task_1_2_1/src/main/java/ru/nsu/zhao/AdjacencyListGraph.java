@@ -1,219 +1,192 @@
 package ru.nsu.zhao;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.io.FileReader;
+import java.util.Scanner;
+import java.util.Stack;
 
 /**
- * 使用邻接表实现图的类。
- *
- * @param <T> 存储在图的顶点中的元素类型
+ * 类，表示使用邻接表的图。
  */
-public class AdjacencyListGraph<T> implements Graph<T> {
-    private final Map<Vertex<T>, List<Vertex<T>>> adjList; // 存储邻接表
-    private final Set<Vertex<T>> vertices; // 存储图中的顶点
+public class AdjacencyListGraph implements Graph {
+    // 邻接表，存储图中每个顶点的相邻顶点列表
+    private final List<List<Integer>> adjList;
+    // 图中的顶点数量
+    private int numVertices;
 
     /**
-     * 构造一个新的空邻接表图。
-     */
-    public AdjacencyListGraph() {
-        adjList = new HashMap<>(); // 初始化邻接表
-        vertices = new HashSet<>(); // 初始化顶点集合
-    }
-
-    /**
-     * 向图中添加一个顶点。
+     * 构造函数，初始化具有指定顶点数量的图。
      *
-     * @param vertex 要添加的顶点
+     * @param vertices 图中的顶点数量
      */
-    @Override
-    public void addVertex(Vertex<T> vertex) {
-        vertices.add(vertex); // 将顶点添加到集合中
-        adjList.put(vertex, new ArrayList<>()); // 在邻接表中初始化该顶点的邻接列表
-    }
+    public AdjacencyListGraph(int vertices) {
+        this.numVertices = vertices;
+        this.adjList = new ArrayList<>(vertices);
 
-    /**
-     * 在两个顶点之间添加一条边。
-     *
-     * @param edge 要添加的边
-     */
-    @Override
-    public void addEdge(Edge<T> edge) {
-        Vertex<T> src = edge.getSource(); // 获取边的源顶点
-        Vertex<T> dest = edge.getDestination(); // 获取边的目标顶点
-        adjList.get(src).add(dest); // 在邻接表中添加目标顶点到源顶点的邻接列表
-    }
-
-    /**
-     * 从图中删除一个顶点。
-     *
-     * @param vertex 要删除的顶点
-     */
-    @Override
-    public void deleteVertex(Vertex<T> vertex) {
-        vertices.remove(vertex); // 从顶点集合中删除顶点
-        adjList.remove(vertex); // 从邻接表中删除顶点的邻接列表
-        for (List<Vertex<T>> neighbours : adjList.values()) {
-            neighbours.remove(vertex); // 从所有邻接列表中删除该顶点
+        // 初始化邻接表，为每个顶点创建一个空的相邻顶点列表
+        for (int i = 0; i < vertices; i++) {
+            adjList.add(new ArrayList<>());
         }
     }
 
     /**
-     * 删除两个顶点之间的边。
-     *
-     * @param edge 要删除的边
+     * 添加一个新顶点到图中，修改邻接表。
      */
     @Override
-    public void deleteEdge(Edge<T> edge) {
-        Vertex<T> src = edge.getSource(); // 获取源顶点
-        Vertex<T> dest = edge.getDestination(); // 获取目标顶点
-        adjList.get(src).remove(dest); // 从源顶点的邻接列表中删除目标顶点
+    public void addVertex() {
+        numVertices++;
+        adjList.add(new ArrayList<>()); // 为新顶点添加一个空的相邻顶点列表
     }
 
     /**
-     * 返回给定顶点的邻居列表。
-     *
-     * @param vertex 要返回邻居的顶点
-     * @return 邻居列表
+     * 从图中删除最后一个顶点，并删除所有指向它的边。
      */
     @Override
-    public List<Vertex<T>> getNeighbours(Vertex<T> vertex) {
-        if (!adjList.containsKey(vertex)) {
-            return new ArrayList<>(); // 如果顶点不在邻接表中，返回空列表
+    public void removeVertex() {
+        if (numVertices == 0) return; // 如果图为空，直接返回
+        numVertices--;
+        adjList.remove(numVertices); // 删除最后一个顶点的邻接表
+
+        // 从其他顶点的邻接表中删除所有指向该顶点的边
+        for (List<Integer> neighbors : adjList) {
+            neighbors.remove((Integer) numVertices); // 删除对应的边
         }
-        return new ArrayList<>(adjList.get(vertex)); // 返回顶点的邻接列表
     }
 
     /**
-     * 从文件中读取图。
-     * 文件的第一行应包含顶点的数量。
-     * 随后的每一行应包含一个顶点的标签。
-     * 在顶点之后，下一行应包含边的数量，
-     * 后续行应包含每条边的源和目标顶点标签。
+     * 在两个顶点之间添加有向边。
      *
-     * @param filename 要读取的文件名
-     * @throws GraphFileReadException 如果读取文件时出现错误
+     * @param source      源顶点
+     * @param destination 目标顶点
      */
     @Override
-    public void readFromFile(String filename) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            String line;
-            line = br.readLine(); // 读取第一行
-            int numVertices = Integer.parseInt(line.trim()); // 解析顶点数量
-            for (int i = 0; i < numVertices; ++i) {
-                line = br.readLine(); // 读取每个顶点的标签
-                if (line == null) {
-                    break; // 如果没有更多行，退出
-                }
-                String[] parts = line.trim().split("\\s+", 2); // 按空格分割
-                T label = (T) parts[1]; // 获取标签
-                addVertex(new Vertex<>(label)); // 添加顶点
+    public void addEdge(int source, int destination) {
+        if (source < numVertices && destination < numVertices) { // 检查顶点是否存在
+            adjList.get(source).add(destination); // 在源顶点的邻接表中添加目标顶点
+        }
+    }
+
+    /**
+     * 删除两个顶点之间的有向边。
+     *
+     * @param source      源顶点
+     * @param destination 目标顶点
+     */
+    @Override
+    public void removeEdge(int source, int destination) {
+        if (source < numVertices && destination < numVertices) { // 检查顶点是否存在
+            adjList.get(source).remove((Integer) destination); // 删除对应的边
+        }
+    }
+
+    /**
+     * 返回指定顶点的相邻顶点列表。
+     *
+     * @param vertex 要查找的顶点
+     * @return 相邻顶点列表
+     */
+    @Override
+    public List<Integer> getNeighbors(int vertex) {
+        if (vertex < numVertices) {
+            return new ArrayList<>(adjList.get(vertex)); // 返回相邻顶点的副本，防止修改原始列表
+        }
+        return new ArrayList<>(); // 如果顶点不存在，返回空列表
+    }
+
+    /**
+     * 从文件中读取图的结构。文件格式为 "源顶点,目标顶点" 的边列表。
+     *
+     * @param filePath 文件路径
+     * @throws Exception 如果无法读取文件
+     */
+    @Override
+    public void readFromFile(String filePath) throws Exception {
+        try (FileReader fileReader = new FileReader(filePath)) {
+            Scanner scannerFile = new Scanner(fileReader);
+            String line = scannerFile.nextLine();
+            String[] edges = line.split(" ");
+            for (String edge : edges) {
+                String[] pair = edge.split(",");
+                this.addEdge(Integer.parseInt(pair[0]), Integer.parseInt(pair[1])); // 添加边
             }
-            line = br.readLine(); // 读取边的数量
-            int numEdges = Integer.parseInt(line.trim()); // 解析边的数量
-            for (int i = 0; i < numEdges; ++i) {
-                line = br.readLine(); // 读取每条边的源和目标标签
-                if (line == null) {
-                    break; // 如果没有更多行，退出
-                }
-                String[] parts = line.trim().split("\\s+", 2); // 按空格分割
-                T srcLabel = (T) parts[0]; // 获取源标签
-                T destLabel = (T) parts[1]; // 获取目标标签
-                Vertex<T> src = findVertexByLabel(srcLabel); // 查找源顶点
-                Vertex<T> dest = findVertexByLabel(destLabel); // 查找目标顶点
-                if (src != null && dest != null) {
-                    addEdge(new Edge<>(src, dest)); // 添加边
-                }
-            }
-        } catch (IOException e) {
-            throw new GraphFileReadException("从文件读取图失败: " + filename, e); // 抛出自定义异常
+        } catch (Exception e){
+            throw new Exception(e.getMessage()); // 抛出异常
         }
     }
 
     /**
-     * 根据标签查找顶点。
+     * 返回图的邻接表的字符串表示。
      *
-     * @param label 要查找的顶点标签
-     * @return 如果找到，返回顶点，否则返回null
-     */
-    Vertex<T> findVertexByLabel(T label) {
-        for (Vertex<T> v : vertices) {
-            if (v.getLabel().equals(label)) {
-                return v; // 找到顶点，返回
-            }
-        }
-        return null; // 未找到，返回null
-    }
-
-    /**
-     * 返回图中的所有顶点列表。
-     *
-     * @return 顶点列表
-     */
-    @Override
-    public List<Vertex<T>> getVertices() {
-        return new ArrayList<>(vertices); // 返回顶点集合的列表
-    }
-
-    /**
-     * 比较该图与另一个对象的相等性。
-     *
-     * @param o 要比较的对象
-     * @return 如果图相等，返回true；否则返回false
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true; // 如果是同一对象，返回true
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false; // 如果对象为null或类型不同，返回false
-        }
-        AdjacencyListGraph<?> that = (AdjacencyListGraph<?>) o; // 强制转换为AdjacencyListGraph类型
-        if (!adjList.equals(that.adjList)) {
-            return false; // 比较邻接表是否相等
-        }
-        return vertices.equals(that.vertices); // 比较顶点集合是否相等
-    }
-
-    /**
-     * 返回该图的哈希码值。
-     *
-     * @return 哈希码值
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(adjList, vertices); // 计算哈希码
-    }
-
-    /**
-     * 返回图的字符串表示。
-     *
-     * @return 字符串表示
+     * @return 图的字符串表示
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(); // 创建字符串构建器
-        sb.append("AdjacencyListGraph:\n");
-        sb.append("Vertices:\n");
-        for (Vertex<T> v : vertices) {
-            sb.append(v).append("\n"); // 添加每个顶点的字符串表示
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < numVertices; i++) {
+            sb.append(i).append(": ").append(adjList.get(i)).append("\n"); // 构建邻接表的字符串表示
         }
-        sb.append("Adjacency List:\n");
-        for (Map.Entry<Vertex<T>, List<Vertex<T>>> entry : adjList.entrySet()) {
-            sb.append(entry.getKey().getLabel()).append(": "); // 添加顶点标签
-            for (Vertex<T> neighbor : entry.getValue()) {
-                sb.append(neighbor.getLabel()).append(" "); // 添加邻居的标签
+        return sb.toString();
+    }
+
+    /**
+     * 根据图的字符串表示检查两个图是否相等。
+     *
+     * @param o 要比较的对象
+     * @return 如果图相等返回 true，否则返回 false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return this.toString().equals(o.toString()); // 比较图的字符串表示
+    }
+
+    /**
+     * 使用 Kahn 算法对图进行拓扑排序。
+     *
+     * @return 拓扑排序后的顶点列表
+     * @throws GraphCycleException 如果图中存在环，无法进行拓扑排序
+     */
+    @Override
+    public List<Integer> topologicalSort() throws GraphCycleException {
+        int[] inDegree = new int[numVertices];  // 每个顶点的入度
+        List<Integer> topOrder = new ArrayList<>();
+
+        // 计算每个顶点的入度
+        for (int i = 0; i < numVertices; i++) {
+            for (int neighbor : adjList.get(i)) {
+                inDegree[neighbor]++;
             }
-            sb.append("\n");
         }
-        return sb.toString(); // 返回图的字符串表示
+
+        // 找出所有入度为 0 的顶点
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < numVertices; i++) {
+            if (inDegree[i] == 0) {
+                stack.push(i);
+            }
+        }
+
+        // Kahn 算法
+        while (!stack.isEmpty()) {
+            int current = stack.pop();
+            topOrder.add(current);
+
+            // 减少所有相邻顶点的入度
+            for (int neighbor : getNeighbors(current)) {
+                inDegree[neighbor]--;
+                if (inDegree[neighbor] == 0) {
+                    stack.push(neighbor);
+                }
+            }
+        }
+
+        // 检查是否存在环
+        if (topOrder.size() != numVertices) {
+            throw new GraphCycleException("图中存在环，无法进行拓扑排序。");
+        }
+
+        return topOrder; // 返回拓扑排序后的顶点列表
     }
 }

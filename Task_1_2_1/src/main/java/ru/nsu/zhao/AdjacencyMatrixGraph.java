@@ -1,288 +1,226 @@
 package ru.nsu.zhao;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.io.FileReader;
+import java.util.Scanner;
+import java.util.Stack;
 
 /**
- * 使用邻接矩阵实现图的类。
- *
- * @param <T> 图中顶点存储元素的类型
+ * 类，表示使用邻接矩阵的有向图。
  */
-public class AdjacencyMatrixGraph<T> implements Graph<T> {
-    private final List<Vertex<T>> verticesList; // 存储顶点的列表
-    private final Map<Vertex<T>, Integer> vertexIndexMap; // 顶点与索引的映射
-    private boolean[][] matrix; // 邻接矩阵
-    private int capacity; // 当前容量
+public class AdjacencyMatrixGraph implements Graph {
+    // 邻接矩阵，用于表示图中的顶点和边
+    private final List<List<Integer>> matrix;
+    // 图中的顶点数量
+    private int numVertices;
 
     /**
-     * 构造一个新的空邻接矩阵图，初始容量为 10。
-     */
-    public AdjacencyMatrixGraph() {
-        verticesList = new ArrayList<>(); // 初始化顶点列表
-        vertexIndexMap = new HashMap<>(); // 初始化顶点索引映射
-        capacity = 10; // 初始容量
-        matrix = new boolean[capacity][capacity]; // 创建邻接矩阵
-    }
-
-    /**
-     * 向图中添加一个顶点。
-     * 如果当前容量已满，则扩展邻接矩阵的容量。
+     * 构造函数，初始化具有指定顶点数量的图。
      *
-     * @param vertex 要添加的顶点
+     * @param vertices 图中的顶点数量
      */
-    @Override
-    public void addVertex(Vertex<T> vertex) {
-        if (verticesList.size() >= capacity) {
-            expandMatrix(); // 扩展矩阵
-        }
-        verticesList.add(vertex); // 添加顶点
-        vertexIndexMap.put(vertex, verticesList.size() - 1); // 更新索引映射
-    }
+    public AdjacencyMatrixGraph(int vertices) {
+        this.numVertices = vertices;
+        this.matrix = new ArrayList<>(vertices);
 
-    /**
-     * 扩展邻接矩阵的容量，使其容量翻倍。
-     */
-    private void expandMatrix() {
-        capacity *= 2; // 容量翻倍
-        boolean[][] newMatrix = new boolean[capacity][capacity]; // 创建新邻接矩阵
-        for (int i = 0; i < matrix.length; ++i) {
-            System.arraycopy(matrix[i], 0, newMatrix[i], 0, matrix[i].length); // 复制旧矩阵的数据
-        }
-        matrix = newMatrix; // 更新矩阵引用
-    }
-
-    /**
-     * 在图中添加一条边。
-     *
-     * @param edge 要添加的边
-     */
-    @Override
-    public void addEdge(Edge<T> edge) {
-        Vertex<T> src = edge.getSource(); // 获取源顶点
-        Vertex<T> dest = edge.getDestination(); // 获取目标顶点
-        int srcIndex = vertexIndexMap.get(src); // 获取源顶点的索引
-        int destIndex = vertexIndexMap.get(dest); // 获取目标顶点的索引
-        matrix[srcIndex][destIndex] = true; // 在邻接矩阵中标记边的存在
-    }
-
-    /**
-     * 从图中删除一个顶点，并移除所有相关的边。
-     *
-     * @param vertex 要删除的顶点
-     */
-    @Override
-    public void deleteVertex(Vertex<T> vertex) {
-        int index = vertexIndexMap.get(vertex); // 获取顶点的索引
-        verticesList.remove(index); // 删除顶点
-        vertexIndexMap.remove(vertex); // 从映射中移除顶点
-        // 更新索引映射
-        for (int i = index; i < verticesList.size(); ++i) {
-            vertexIndexMap.put(verticesList.get(i), i);
-        }
-        // 删除与该顶点相关的行和列
-        for (int i = 0; i < verticesList.size() + 1; ++i) {
-            for (int j = index; j < verticesList.size(); ++j) {
-                matrix[i][j] = matrix[i][j + 1]; // 复制边
+        // 初始化邻接矩阵，将每个元素设为 0，表示没有边
+        for (int i = 0; i < vertices; i++) {
+            List<Integer> row = new ArrayList<>(vertices);
+            for (int j = 0; j < vertices; j++) {
+                row.add(0); // 所有边初始化为 0
             }
-            matrix[i][verticesList.size()] = false; // 清空最后一列
+            matrix.add(row);
         }
     }
 
     /**
-     * 删除两顶点之间的边。
-     *
-     * @param edge 要删除的边
+     * 添加一个新顶点到图中，修改邻接矩阵以适应新顶点。
      */
     @Override
-    public void deleteEdge(Edge<T> edge) {
-        Vertex<T> src = edge.getSource(); // 获取源顶点
-        Vertex<T> dest = edge.getDestination(); // 获取目标顶点
-        int srcIndex = vertexIndexMap.get(src); // 获取源顶点的索引
-        int destIndex = vertexIndexMap.get(dest); // 获取目标顶点的索引
-        if (matrix[srcIndex][destIndex]) { // 如果边存在
-            matrix[srcIndex][destIndex] = false; // 在邻接矩阵中标记边的不存在
+    public void addVertex() {
+        numVertices++;
+        // 为新顶点添加一行，初始值全为 0
+        List<Integer> row = new ArrayList<>(numVertices);
+        for (int i = 0; i < numVertices; i++) {
+            row.add(0);
+        }
+        matrix.add(row);
+
+        // 给现有的每一行添加一个新的列，初始值为 0
+        for (int i = 0; i < numVertices - 1; i++) {
+            matrix.get(i).add(0);
         }
     }
 
     /**
-     * 返回给定顶点的邻居列表。
-     *
-     * @param vertex 要查询邻居的顶点
-     * @return 邻居列表
+     * 删除最后一个顶点，并修改邻接矩阵。
      */
     @Override
-    public List<Vertex<T>> getNeighbours(Vertex<T> vertex) {
-        List<Vertex<T>> neighbours = new ArrayList<>(); // 存储邻居的列表
-        if (!vertexIndexMap.containsKey(vertex)) {
-            return neighbours; // 如果顶点不存在，返回空列表
+    public void removeVertex() {
+        if (numVertices == 0) return; // 如果图为空，直接返回
+        numVertices--;
+        matrix.remove(numVertices); // 删除最后一行
+
+        // 删除每一行的最后一个元素
+        for (int i = 0; i < numVertices; i++) {
+            matrix.get(i).remove(numVertices);
         }
-        int index = vertexIndexMap.get(vertex); // 获取顶点的索引
-        for (int j = 0; j < verticesList.size(); j++) {
-            if (matrix[index][j]) { // 如果邻接矩阵中存在边
-                neighbours.add(verticesList.get(j)); // 添加到邻居列表
-            }
-        }
-        return neighbours; // 返回邻居列表
     }
 
     /**
-     * 从文件中读取图。
-     * 文件的第一行应包含顶点的数量。
-     * 后续行应包含顶点标签。
-     * 接下来的一行应包含边的数量，后续行应包含每条边的源和目标顶点标签。
+     * 在两个顶点之间添加一条边。
      *
-     * @param filename 要读取的文件名
+     * @param source      源顶点
+     * @param destination 目标顶点
      */
     @Override
-    public void readFromFile(String filename) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            String line;
-            line = br.readLine(); // 读取第一行
-            if (line == null) {
-                return; // 如果文件为空，直接返回
-            }
-            int numVertices = Integer.parseInt(line.trim()); // 读取顶点数量
-            for (int i = 0; i < numVertices; ++i) {
-                line = br.readLine(); // 读取每个顶点的标签
-                if (line == null) {
-                    break; // 如果读取行为空，退出
-                }
-                String[] parts = line.trim().split("\\s+", 2); // 分割顶点标签
-                T label = (T) parts[1]; // 获取顶点标签
-                addVertex(new Vertex<>(label)); // 添加顶点
-            }
-            line = br.readLine(); // 读取边的数量
-            if (line == null) {
-                return; // 如果读取行为空，直接返回
-            }
-            int numEdges = Integer.parseInt(line.trim()); // 读取边数量
-            for (int i = 0; i < numEdges; ++i) {
-                line = br.readLine(); // 读取每条边
-                if (line == null) {
-                    break; // 如果读取行为空，退出
-                }
-                String[] parts = line.trim().split("\\s+", 2); // 分割边的定义
-                T srcLabel = (T) parts[0]; // 源顶点标签
-                T destLabel = (T) parts[1]; // 目标顶点标签
-                Vertex<T> src = findVertexByLabel(srcLabel); // 查找源顶点
-                Vertex<T> dest = findVertexByLabel(destLabel); // 查找目标顶点
-                if (src != null && dest != null) {
-                    addEdge(new Edge<>(src, dest)); // 添加边
+    public void addEdge(int source, int destination) {
+        if (source < numVertices && destination < numVertices) { // 检查顶点是否存在
+            matrix.get(source).set(destination, 1); // 在源顶点和目标顶点之间添加边
+        }
+    }
+
+    /**
+     * 删除两个顶点之间的边。
+     *
+     * @param source      源顶点
+     * @param destination 目标顶点
+     */
+    @Override
+    public void removeEdge(int source, int destination) {
+        if (source < numVertices && destination < numVertices) { // 检查顶点是否存在
+            matrix.get(source).set(destination, 0); // 删除源顶点和目标顶点之间的边
+        }
+    }
+
+    /**
+     * 返回指定顶点的相邻顶点列表。
+     *
+     * @param vertex 要查找的顶点
+     * @return 相邻顶点列表
+     */
+    @Override
+    public List<Integer> getNeighbors(int vertex) {
+        List<Integer> neighbors = new ArrayList<>();
+        if (vertex < numVertices) {
+            // 遍历矩阵中的行，查找该顶点的所有邻接顶点
+            for (int i = 0; i < numVertices; i++) {
+                if (matrix.get(vertex).get(i) == 1) {
+                    neighbors.add(i); // 添加与该顶点相邻的顶点
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace(); // 处理文件读取异常
         }
+        return neighbors;
     }
 
     /**
-     * 根据标签查找顶点。
+     * 从文件中读取图。文件格式为 "源顶点,目标顶点" 的边列表。
      *
-     * @param label 要查找的顶点标签
-     * @return 找到的顶点，如果未找到则返回 null
+     * @param filePath 文件路径
+     * @throws Exception 如果无法读取文件
      */
-    Vertex<T> findVertexByLabel(T label) {
-        for (Vertex<T> v : verticesList) {
-            if (v.label().equals(label)) {
-                return v; // 返回找到的顶点
+    @Override
+    public void readFromFile(String filePath) throws Exception {
+        try (FileReader fileReader = new FileReader(filePath)) {
+            Scanner scannerFile = new Scanner(fileReader);
+            String line = scannerFile.nextLine();
+            String[] edges = line.split(" ");
+            for (String edge : edges) {
+                String[] pair = edge.split(",");
+                this.addEdge(Integer.parseInt(pair[0]), Integer.parseInt(pair[1])); // 添加边
             }
+        } catch (Exception e){
+            throw new Exception(e.getMessage()); // 抛出异常
         }
-        return null; // 未找到返回 null
     }
 
     /**
-     * 返回图中的所有顶点。
+     * 返回邻接矩阵的字符串表示。
      *
-     * @return 顶点列表
-     */
-    @Override
-    public List<Vertex<T>> getVertices() {
-        return new ArrayList<>(verticesList); // 返回顶点的副本
-    }
-
-    /**
-     * 比较此图与另一个对象的相等性。
-     *
-     * @param o 要比较的对象
-     * @return 如果两个图相等则返回 true，否则返回 false
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true; // 同一个对象
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false; // 类型不匹配
-        }
-        AdjacencyMatrixGraph<?> that = (AdjacencyMatrixGraph<?>) o; // 类型转换
-        if (capacity != that.capacity) {
-            return false; // 容量不同
-        }
-        if (!verticesList.equals(that.verticesList)) {
-            return false; // 顶点列表不同
-        }
-        return Arrays.deepEquals(matrix, that.matrix); // 矩阵内容不同
-    }
-
-    /**
-     * 返回图的哈希码值。
-     *
-     * @return 哈希码值
-     */
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(verticesList, vertexIndexMap, capacity); // 计算哈希码
-        result = 31 * result + Arrays.deepHashCode(matrix); // 包含邻接矩阵的哈希码
-        return result; // 返回最终哈希码
-    }
-
-    /**
-     * 返回图的字符串表示。
-     *
-     * @return 图的字符串表示
+     * @return 邻接矩阵的字符串表示
      */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("AdjacencyMatrixGraph:\n");
-        sb.append("Vertices:\n");
-        for (Vertex<T> v : verticesList) {
-            sb.append(v).append("\n"); // 添加顶点信息
+        sb.append("\t"); // 输出列索引
+        for (int i = 0; i < numVertices; i++) {
+            sb.append(i).append(" ");
         }
-        sb.append("Edges:\n");
-        for (int i = 0; i < verticesList.size(); i++) {
-            for (int j = 0; j < verticesList.size(); j++) {
-                if (matrix[i][j]) { // 如果存在边
-                    sb.append("Edge from ").append(verticesList.get(i).label())
-                            .append(" to ").append(verticesList.get(j).label()).append("\n"); // 添加边信息
-                }
+        sb.append("\n\t");
+        sb.append("* ".repeat(numVertices)); // 输出分隔符
+        sb.append("\n");
+        // 输出矩阵的每一行和行索引
+        for (int i = 0; i < numVertices; i++) {
+            sb.append(i).append(" * ");
+            for (Integer cell : matrix.get(i)) {
+                sb.append(cell).append(" ");
             }
+            sb.append("\n");
         }
-        return sb.toString(); // 返回字符串表示
+        return sb.toString();
     }
 
     /**
-     * 返回图中所有边的集合。
+     * 根据邻接矩阵的字符串表示检查两个图是否相等。
      *
-     * @return 边的集合
+     * @param o 要比较的对象
+     * @return 如果图相等返回 true，否则返回 false
      */
-    public Collection<Edge<T>> getEdges() {
-        List<Edge<T>> edges = new ArrayList<>(); // 存储边的列表
-        for (int i = 0; i < verticesList.size(); i++) {
-            for (int j = 0; j < verticesList.size(); j++) {
-                if (matrix[i][j]) { // 如果存在边
-                    edges.add(new Edge<>(verticesList.get(i), verticesList.get(j))); // 添加边
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return this.toString().equals(o.toString()); // 比较邻接矩阵的字符串表示
+    }
+
+    /**
+     * 使用 Kahn 算法对图进行拓扑排序。
+     *
+     * @return 拓扑排序后的顶点列表
+     * @throws GraphCycleException 如果图中存在环，无法进行拓扑排序
+     */
+    @Override
+    public List<Integer> topologicalSort() throws GraphCycleException {
+        int[] inDegree = new int[numVertices];  // 每个顶点的入度
+        List<Integer> topOrder = new ArrayList<>();
+
+        // 计算每个顶点的入度
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                if (matrix.get(i).get(j) == 1) {
+                    inDegree[j]++;
                 }
             }
         }
-        return edges; // 返回边的集合
+
+        // 找出所有入度为 0 的顶点
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < numVertices; i++) {
+            if (inDegree[i] == 0) {
+                stack.push(i);
+            }
+        }
+
+        // Kahn 算法
+        while (!stack.isEmpty()) {
+            int current = stack.pop();
+            topOrder.add(current);
+
+            // 减少所有相邻顶点的入度
+            for (int neighbor : getNeighbors(current)) {
+                inDegree[neighbor]--;
+                if (inDegree[neighbor] == 0) {
+                    stack.push(neighbor);
+                }
+            }
+        }
+
+        // 检查是否存在环
+        if (topOrder.size() != numVertices) {
+            throw new GraphCycleException("图中存在环，无法进行拓扑排序。");
+        }
+
+        return topOrder; // 返回拓扑排序后的顶点列表
     }
 }
