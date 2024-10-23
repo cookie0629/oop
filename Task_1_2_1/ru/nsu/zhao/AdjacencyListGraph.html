@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -137,7 +137,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public class <span class="typeNameLabel">AdjacencyListGraph</span>
 extends java.lang.Object
 implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
-<div class="block">类，表示使用邻接表的图。</div>
 </li>
 </ul>
 </div>
@@ -190,34 +189,27 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addVertex()">addVertex</a></span>()</code></th>
-<td class="colLast">
-<div class="block">添加一个新顶点到图中，修改邻接表。</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">
 <div class="block">根据图的字符串表示检查两个图是否相等。</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.Integer&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNeighbors(int)">getNeighbors</a></span>&#8203;(int&nbsp;vertex)</code></th>
 <td class="colLast">
 <div class="block">返回指定顶点的相邻顶点列表。</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readFromFile(java.lang.String)">readFromFile</a></span>&#8203;(java.lang.String&nbsp;filePath)</code></th>
 <td class="colLast">
 <div class="block">从文件中读取图的结构。文件格式为 "源顶点,目标顶点" 的边列表。</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEdge(int,int)">removeEdge</a></span>&#8203;(int&nbsp;source,
           int&nbsp;destination)</code></th>
@@ -225,21 +217,14 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 <div class="block">删除两个顶点之间的有向边。</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeVertex()">removeVertex</a></span>()</code></th>
-<td class="colLast">
-<div class="block">从图中删除最后一个顶点，并删除所有指向它的边。</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.Integer&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#topologicalSort()">topologicalSort</a></span>()</code></th>
 <td class="colLast">
 <div class="block">使用 Kahn 算法对图进行拓扑排序。</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">
@@ -294,34 +279,6 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="addVertex()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addVertex</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addVertex()</pre>
-<div class="block">添加一个新顶点到图中，修改邻接表。</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Graph.html#addVertex()">addVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
-</dl>
-</li>
-</ul>
-<a id="removeVertex()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>removeVertex</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;removeVertex()</pre>
-<div class="block">从图中删除最后一个顶点，并删除所有指向它的边。</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Graph.html#removeVertex()">removeVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
-</dl>
-</li>
-</ul>
 <a id="addEdge(int,int)">
 <!--   -->
 </a>
