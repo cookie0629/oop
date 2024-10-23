@@ -2,20 +2,7 @@ package ru.nsu.zhao;
 
 import java.util.List;
 
-/**
- * 接口，描述了图操作的基本方法。
- */
 public interface Graph {
-
-    /**
-     * 向图中添加一个新的顶点。
-     */
-    void addVertex();
-
-    /**
-     * 从图中删除最后一个顶点。
-     */
-    void removeVertex();
 
     /**
      * 在两个顶点之间添加一条有向边。

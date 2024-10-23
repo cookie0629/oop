@@ -6,9 +6,7 @@ import java.io.FileReader;
 import java.util.Scanner;
 import java.util.Stack;
 
-/**
- * 类，表示使用邻接表的图。
- */
+
 public class AdjacencyListGraph implements Graph {
     // 邻接表，存储图中每个顶点的相邻顶点列表
     private final List<List<Integer>> adjList;
@@ -27,30 +25,6 @@ public class AdjacencyListGraph implements Graph {
         // 初始化邻接表，为每个顶点创建一个空的相邻顶点列表
         for (int i = 0; i < vertices; i++) {
             adjList.add(new ArrayList<>());
-        }
-    }
-
-    /**
-     * 添加一个新顶点到图中，修改邻接表。
-     */
-    @Override
-    public void addVertex() {
-        numVertices++;
-        adjList.add(new ArrayList<>()); // 为新顶点添加一个空的相邻顶点列表
-    }
-
-    /**
-     * 从图中删除最后一个顶点，并删除所有指向它的边。
-     */
-    @Override
-    public void removeVertex() {
-        if (numVertices == 0) return; // 如果图为空，直接返回
-        numVertices--;
-        adjList.remove(numVertices); // 删除最后一个顶点的邻接表
-
-        // 从其他顶点的邻接表中删除所有指向该顶点的边
-        for (List<Integer> neighbors : adjList) {
-            neighbors.remove((Integer) numVertices); // 删除对应的边
         }
     }
 

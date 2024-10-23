@@ -6,9 +6,7 @@ import java.io.FileReader;
 import java.util.Scanner;
 import java.util.Stack;
 
-/**
- * 类，表示使用邻接矩阵的有向图。
- */
+
 public class AdjacencyMatrixGraph implements Graph {
     // 邻接矩阵，用于表示图中的顶点和边
     private final List<List<Integer>> matrix;
@@ -31,40 +29,6 @@ public class AdjacencyMatrixGraph implements Graph {
                 row.add(0); // 所有边初始化为 0
             }
             matrix.add(row);
-        }
-    }
-
-    /**
-     * 添加一个新顶点到图中，修改邻接矩阵以适应新顶点。
-     */
-    @Override
-    public void addVertex() {
-        numVertices++;
-        // 为新顶点添加一行，初始值全为 0
-        List<Integer> row = new ArrayList<>(numVertices);
-        for (int i = 0; i < numVertices; i++) {
-            row.add(0);
-        }
-        matrix.add(row);
-
-        // 给现有的每一行添加一个新的列，初始值为 0
-        for (int i = 0; i < numVertices - 1; i++) {
-            matrix.get(i).add(0);
-        }
-    }
-
-    /**
-     * 删除最后一个顶点，并修改邻接矩阵。
-     */
-    @Override
-    public void removeVertex() {
-        if (numVertices == 0) return; // 如果图为空，直接返回
-        numVertices--;
-        matrix.remove(numVertices); // 删除最后一行
-
-        // 删除每一行的最后一个元素
-        for (int i = 0; i < numVertices; i++) {
-            matrix.get(i).remove(numVertices);
         }
     }
 

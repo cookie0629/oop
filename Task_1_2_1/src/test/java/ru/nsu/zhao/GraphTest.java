@@ -17,7 +17,7 @@ class GraphTest {
         adjacencyMatrixGraph = new AdjacencyMatrixGraph(4);
         incidenceMatrixGraph = new IncidenceMatrixGraph(4);
     }
-    
+
     @Test
     void testAddAndRemoveEdge() {
         adjacencyListGraph.addEdge(0, 1);

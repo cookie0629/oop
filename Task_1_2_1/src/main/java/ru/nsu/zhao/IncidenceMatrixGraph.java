@@ -32,30 +32,6 @@ public class IncidenceMatrixGraph implements Graph {
     }
 
     /**
-     * 向图中添加新顶点，并更新关联矩阵。
-     */
-    @Override
-    public void addVertex() {
-        numVertices++;
-        // 为新顶点添加一个空行
-        List<Integer> row = new ArrayList<>();
-        for (int i = 0; i < numEdges; i++) {
-            row.add(0);
-        }
-        matrix.add(row);
-    }
-
-    /**
-     * 从图中删除最后一个顶点。
-     */
-    @Override
-    public void removeVertex() {
-        if (numVertices == 0) return;  // 如果图为空，则无法删除顶点
-        numVertices--;
-        matrix.remove(numVertices);  // 删除最后一个顶点对应的行
-    }
-
-    /**
      * 在两个顶点之间添加一条边。
      *
      * @param source      起始顶点
