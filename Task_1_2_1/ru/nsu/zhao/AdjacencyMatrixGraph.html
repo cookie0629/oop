@@ -137,6 +137,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public class <span class="typeNameLabel">AdjacencyMatrixGraph</span>
 extends java.lang.Object
 implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
+<div class="block">类，表示使用邻接矩阵的有向图。</div>
 </li>
 </ul>
 </div>
@@ -157,8 +158,10 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int)">AdjacencyMatrixGraph</a></span>&#8203;(int&nbsp;size)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int)">AdjacencyMatrixGraph</a></span>&#8203;(int&nbsp;vertices)</code></th>
+<td class="colLast">
+<div class="block">构造函数，初始化具有指定顶点数量的图。</div>
+</td>
 </tr>
 </table>
 </li>
@@ -180,50 +183,68 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEdge(int,int)">addEdge</a></span>&#8203;(int&nbsp;from,
-       int&nbsp;to)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEdge(int,int)">addEdge</a></span>&#8203;(int&nbsp;source,
+       int&nbsp;destination)</code></th>
+<td class="colLast">
+<div class="block">在两个顶点之间添加一条边。</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addVertex(int)">addVertex</a></span>&#8203;(int&nbsp;vertex)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addVertex()">addVertex</a></span>()</code></th>
+<td class="colLast">
+<div class="block">添加一个新顶点到图中，修改邻接矩阵以适应新顶点。</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;obj)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
+<td class="colLast">
+<div class="block">根据邻接矩阵的字符串表示检查两个图是否相等。</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.Integer&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNeighbors(int)">getNeighbors</a></span>&#8203;(int&nbsp;vertex)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">返回指定顶点的相邻顶点列表。</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readFromFile(java.lang.String)">readFromFile</a></span>&#8203;(java.lang.String&nbsp;filePath)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">从文件中读取图。文件格式为 "源顶点,目标顶点" 的边列表。</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEdge(int,int)">removeEdge</a></span>&#8203;(int&nbsp;from,
-          int&nbsp;to)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEdge(int,int)">removeEdge</a></span>&#8203;(int&nbsp;source,
+          int&nbsp;destination)</code></th>
+<td class="colLast">
+<div class="block">删除两个顶点之间的边。</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeVertex(int)">removeVertex</a></span>&#8203;(int&nbsp;vertex)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeVertex()">removeVertex</a></span>()</code></th>
+<td class="colLast">
+<div class="block">删除最后一个顶点，并修改邻接矩阵。</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.Integer&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#topologicalSort()">topologicalSort</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">使用 Kahn 算法对图进行拓扑排序。</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">返回邻接矩阵的字符串表示。</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -255,7 +276,12 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AdjacencyMatrixGraph</h4>
-<pre>public&nbsp;AdjacencyMatrixGraph&#8203;(int&nbsp;size)</pre>
+<pre>public&nbsp;AdjacencyMatrixGraph&#8203;(int&nbsp;vertices)</pre>
+<div class="block">构造函数，初始化具有指定顶点数量的图。</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>vertices</code> - 图中的顶点数量</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -268,29 +294,31 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="addVertex(int)">
+<a id="addVertex()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addVertex</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addVertex&#8203;(int&nbsp;vertex)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addVertex()</pre>
+<div class="block">添加一个新顶点到图中，修改邻接矩阵以适应新顶点。</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Graph.html#addVertex(int)">addVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
+<dd><code><a href="Graph.html#addVertex()">addVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
 </dl>
 </li>
 </ul>
-<a id="removeVertex(int)">
+<a id="removeVertex()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeVertex</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;removeVertex&#8203;(int&nbsp;vertex)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;removeVertex()</pre>
+<div class="block">删除最后一个顶点，并修改邻接矩阵。</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Graph.html#removeVertex(int)">removeVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
+<dd><code><a href="Graph.html#removeVertex()">removeVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -300,11 +328,15 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>addEdge</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addEdge&#8203;(int&nbsp;from,
-                    int&nbsp;to)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addEdge&#8203;(int&nbsp;source,
+                    int&nbsp;destination)</pre>
+<div class="block">在两个顶点之间添加一条边。</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#addEdge(int,int)">addEdge</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>source</code> - 源顶点</dd>
+<dd><code>destination</code> - 目标顶点</dd>
 </dl>
 </li>
 </ul>
@@ -314,11 +346,15 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeEdge</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;removeEdge&#8203;(int&nbsp;from,
-                       int&nbsp;to)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;removeEdge&#8203;(int&nbsp;source,
+                       int&nbsp;destination)</pre>
+<div class="block">删除两个顶点之间的边。</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#removeEdge(int,int)">removeEdge</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>source</code> - 源顶点</dd>
+<dd><code>destination</code> - 目标顶点</dd>
 </dl>
 </li>
 </ul>
@@ -329,9 +365,14 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 <li class="blockList">
 <h4>getNeighbors</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Integer&gt;&nbsp;getNeighbors&#8203;(int&nbsp;vertex)</pre>
+<div class="block">返回指定顶点的相邻顶点列表。</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#getNeighbors(int)">getNeighbors</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>vertex</code> - 要查找的顶点</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>相邻顶点列表</dd>
 </dl>
 </li>
 </ul>
@@ -341,23 +382,16 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>readFromFile</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;readFromFile&#8203;(java.lang.String&nbsp;filePath)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;readFromFile&#8203;(java.lang.String&nbsp;filePath)
+                  throws java.lang.Exception</pre>
+<div class="block">从文件中读取图。文件格式为 "源顶点,目标顶点" 的边列表。</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#readFromFile(java.lang.String)">readFromFile</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
-</dl>
-</li>
-</ul>
-<a id="topologicalSort()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>topologicalSort</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Integer&gt;&nbsp;topologicalSort()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Graph.html#topologicalSort()">topologicalSort</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>filePath</code> - 文件路径</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.Exception</code> - 如果无法读取文件</dd>
 </dl>
 </li>
 </ul>
@@ -368,26 +402,53 @@ implements <a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></pre>
 <li class="blockList">
 <h4>toString</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
+<div class="block">返回邻接矩阵的字符串表示。</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#toString()">toString</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>邻接矩阵的字符串表示</dd>
 </dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>equals</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;obj)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;o)</pre>
+<div class="block">根据邻接矩阵的字符串表示检查两个图是否相等。</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#equals(java.lang.Object)">equals</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>o</code> - 要比较的对象</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>如果图相等返回 true，否则返回 false</dd>
+</dl>
+</li>
+</ul>
+<a id="topologicalSort()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>topologicalSort</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Integer&gt;&nbsp;topologicalSort()
+                                                  throws <a href="GraphCycleException.html" title="class in ru.nsu.zhao">GraphCycleException</a></pre>
+<div class="block">使用 Kahn 算法对图进行拓扑排序。</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Graph.html#topologicalSort()">topologicalSort</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.zhao">Graph</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>拓扑排序后的顶点列表</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="GraphCycleException.html" title="class in ru.nsu.zhao">GraphCycleException</a></code> - 如果图中存在环，无法进行拓扑排序</dd>
 </dl>
 </li>
 </ul>
