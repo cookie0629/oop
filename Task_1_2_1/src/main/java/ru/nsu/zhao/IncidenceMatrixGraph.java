@@ -11,7 +11,7 @@ import java.util.Stack;
  */
 public class IncidenceMatrixGraph implements Graph {
     private final List<List<Integer>> matrix;  // 关联矩阵
-    private int numVertices;  // 顶点数量
+    private final int numVertices;  // 顶点数量
     private int numEdges;  // 边的数量
 
     /**

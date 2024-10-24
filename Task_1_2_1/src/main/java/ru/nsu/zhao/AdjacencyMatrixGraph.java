@@ -176,7 +176,6 @@ public class AdjacencyMatrixGraph implements Graph {
         if (topOrder.size() != numVertices) {
             throw new GraphCycleException("图中存在环，无法进行拓扑排序。");
         }
-
         return topOrder; // 返回拓扑排序后的顶点列表
     }
 }
