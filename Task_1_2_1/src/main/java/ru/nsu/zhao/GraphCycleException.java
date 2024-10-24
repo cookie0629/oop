@@ -8,6 +8,7 @@ public class GraphCycleException extends Exception {
     /**
      * GraphCycleException 构造方法。
      * @param message 当异常发生时传递的错误信息。
+     *
      */
     public GraphCycleException(String message) {
         super(message);
