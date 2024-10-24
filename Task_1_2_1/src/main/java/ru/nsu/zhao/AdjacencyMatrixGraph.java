@@ -11,11 +11,10 @@ public class AdjacencyMatrixGraph implements Graph {
     // 邻接矩阵，用于表示图中的顶点和边
     private final List<List<Integer>> matrix;
     // 图中的顶点数量
-    private int numVertices;
+    private final int numVertices;
 
     /**
      * 构造函数，初始化具有指定顶点数量的图。
-     *
      * @param vertices 图中的顶点数量
      */
     public AdjacencyMatrixGraph(int vertices) {
@@ -34,7 +33,6 @@ public class AdjacencyMatrixGraph implements Graph {
 
     /**
      * 在两个顶点之间添加一条边。
-     *
      * @param source      源顶点
      * @param destination 目标顶点
      */
@@ -47,7 +45,6 @@ public class AdjacencyMatrixGraph implements Graph {
 
     /**
      * 删除两个顶点之间的边。
-     *
      * @param source      源顶点
      * @param destination 目标顶点
      */
@@ -60,7 +57,6 @@ public class AdjacencyMatrixGraph implements Graph {
 
     /**
      * 返回指定顶点的相邻顶点列表。
-     *
      * @param vertex 要查找的顶点
      * @return 相邻顶点列表
      */
@@ -80,7 +76,6 @@ public class AdjacencyMatrixGraph implements Graph {
 
     /**
      * 从文件中读取图。文件格式为 "源顶点,目标顶点" 的边列表。
-     *
      * @param filePath 文件路径
      * @throws Exception 如果无法读取文件
      */
@@ -101,7 +96,6 @@ public class AdjacencyMatrixGraph implements Graph {
 
     /**
      * 返回邻接矩阵的字符串表示。
-     *
      * @return 邻接矩阵的字符串表示
      */
     @Override
@@ -127,7 +121,6 @@ public class AdjacencyMatrixGraph implements Graph {
 
     /**
      * 根据邻接矩阵的字符串表示检查两个图是否相等。
-     *
      * @param o 要比较的对象
      * @return 如果图相等返回 true，否则返回 false
      */
@@ -140,7 +133,6 @@ public class AdjacencyMatrixGraph implements Graph {
 
     /**
      * 使用 Kahn 算法对图进行拓扑排序。
-     *
      * @return 拓扑排序后的顶点列表
      * @throws GraphCycleException 如果图中存在环，无法进行拓扑排序
      */
@@ -188,3 +180,4 @@ public class AdjacencyMatrixGraph implements Graph {
         return topOrder; // 返回拓扑排序后的顶点列表
     }
 }
+

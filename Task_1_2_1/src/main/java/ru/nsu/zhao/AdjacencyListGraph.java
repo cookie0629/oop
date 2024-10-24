@@ -11,11 +11,10 @@ public class AdjacencyListGraph implements Graph {
     // 邻接表，存储图中每个顶点的相邻顶点列表
     private final List<List<Integer>> adjList;
     // 图中的顶点数量
-    private int numVertices;
+    private final int numVertices;
 
     /**
      * 构造函数，初始化具有指定顶点数量的图。
-     *
      * @param vertices 图中的顶点数量
      */
     public AdjacencyListGraph(int vertices) {

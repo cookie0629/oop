@@ -16,7 +16,6 @@ public class IncidenceMatrixGraph implements Graph {
 
     /**
      * 构造函数，初始化具有指定顶点数量的图。
-     *
      * @param vertices 图中的顶点数量
      */
     public IncidenceMatrixGraph(int vertices) {
@@ -33,7 +32,6 @@ public class IncidenceMatrixGraph implements Graph {
 
     /**
      * 在两个顶点之间添加一条边。
-     *
      * @param source      起始顶点
      * @param destination 目标顶点
      */
@@ -53,7 +51,6 @@ public class IncidenceMatrixGraph implements Graph {
 
     /**
      * 删除两个顶点之间的边。
-     *
      * @param source      起始顶点
      * @param destination 目标顶点
      */
@@ -72,7 +69,6 @@ public class IncidenceMatrixGraph implements Graph {
 
     /**
      * 返回指定顶点的邻接顶点列表。
-     *
      * @param vertex 要查找邻居的顶点
      * @return 邻接顶点的列表
      */
@@ -96,7 +92,6 @@ public class IncidenceMatrixGraph implements Graph {
 
     /**
      * 从文件中读取图的结构。文件格式为："起点,终点"。
-     *
      * @param filePath 文件路径
      * @throws Exception 如果文件无法读取
      */
@@ -117,7 +112,6 @@ public class IncidenceMatrixGraph implements Graph {
 
     /**
      * 返回图的关联矩阵的字符串表示形式。
-     *
      * @return 图的字符串表示
      */
     @Override
@@ -142,7 +136,6 @@ public class IncidenceMatrixGraph implements Graph {
 
     /**
      * 比较两个图是否相等。
-     *
      * @param o 要比较的对象
      * @return 如果图相等，则返回 true，否则返回 false
      */
@@ -155,7 +148,6 @@ public class IncidenceMatrixGraph implements Graph {
 
     /**
      * 对图进行拓扑排序（Kahn 算法）。
-     *
      * @return 顶点的拓扑排序列表
      * @throws GraphCycleException 如果图中存在环，排序不可能
      */
@@ -203,3 +195,4 @@ public class IncidenceMatrixGraph implements Graph {
         return topOrder;
     }
 }
+
