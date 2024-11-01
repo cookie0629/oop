@@ -86,7 +86,7 @@ class HashTableTest {
         hashTable.insert("two", 2);
 
         int count = 0;
-        for (HashTable.HashEntry<String, Number> entry : hashTable) {
+        for (HashTable.HashEntry<String, Number> _ : hashTable) {
             count++;
         }
         assertEquals(2, count);
