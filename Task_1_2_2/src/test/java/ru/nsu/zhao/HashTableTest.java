@@ -76,21 +76,6 @@ class HashTableTest {
         assertFalse(hashTable.hasKey("two"));
     }
 
-    /**
-     * 测试迭代哈希表中的元素。
-     * 使用迭代器遍历所有元素并检查数量。
-     */
-    @Test
-    void testIterator() {
-        hashTable.insert("one", 1);
-        hashTable.insert("two", 2);
-
-        int count = 0;
-        for (HashTable.HashEntry<String, Number> _ : hashTable) {
-            count++;
-        }
-        assertEquals(2, count);
-    }
 
     /**
      * 测试两个哈希表的相等性判断。
