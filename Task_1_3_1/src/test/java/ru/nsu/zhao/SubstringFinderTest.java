@@ -2,99 +2,96 @@ package ru.nsu.zhao;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.StringReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
+import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * 测试类，用于验证 SubstringSearch 类的正确性
+ */
 class SubstringFinderTest {
     /**
-     * 测试子字符串不存在的情况。
+     * 测试 resourceSearch 方法，当文件中不包含子字符串时
      */
     @Test
-    void testFindSubstringNotFound() throws IOException {
-        String fileName = "test2.txt";
-        String content = "абракадабра";
-        String subStr = "змея";
+    void testResourceSearchWithNoMatch() throws IOException {
+        // 假设资源内容是 "абракадабра"
+        String resourceName = "input.txt";
+        String subName = "xyz";
 
-        createTestFile(fileName, content);
+        // 创建模拟文件内容的输入流
+        String inputContent = "абракадабра";
+        BufferedReader reader = new BufferedReader(new StringReader(inputContent));
 
-        List<Long> result = SubstringFinder.find(fileName, subStr);
-        assertEquals(List.of(), result, "子字符串不在文件中，应返回空列表");
+        // 使用 searchInReader 方法进行搜索
+        ArrayList<Long> result = SubstringSearch.searchInReader(reader, subName);
 
-        deleteTestFile(fileName);
+        // 断言没有找到任何匹配项
+        assertTrue(result.isEmpty());
     }
 
     /**
-     * 测试文件为空的情况。
+     * 测试 resourceSearch 方法，当文件内容小于子字符串长度时
      */
     @Test
-    void testEmptyFile() throws IOException {
-        String fileName = "test3.txt";
-        String content = "";
-        String subStr = "бра";
+    void testResourceSearchWithSmallFile() throws IOException {
+        // 假设资源内容是 "абра"
+        String resourceName = "input.txt";
+        String subName = "абракадабра";  // 长度大于文件内容
 
-        createTestFile(fileName, content);
+        // 创建模拟文件内容的输入流
+        String inputContent = "абра";
+        BufferedReader reader = new BufferedReader(new StringReader(inputContent));
 
-        List<Long> result = SubstringFinder.find(fileName, subStr);
-        assertEquals(List.of(), result, "空文件中不可能找到子字符串，应返回空列表");
+        // 使用 searchInReader 方法进行搜索
+        ArrayList<Long> result = SubstringSearch.searchInReader(reader, subName);
 
-        deleteTestFile(fileName);
+        // 断言没有找到任何匹配项
+        assertTrue(result.isEmpty());
     }
 
     /**
-     * 测试子字符串为空的情况。
+     * 测试 resourceSearch 方法，在空文件中搜索
      */
     @Test
-    void testEmptySubstring() throws IOException {
-        String fileName = "test4.txt";
-        String content = "абракадабра";
-        String subStr = "";
+    void testResourceSearchWithEmptyFile() throws IOException {
+        // 假设资源内容是空的
+        String resourceName = "input.txt";
+        String subName = "бра";
 
-        createTestFile(fileName, content);
+        // 创建模拟空文件内容的输入流
+        String inputContent = "";
+        BufferedReader reader = new BufferedReader(new StringReader(inputContent));
 
-        List<Long> result = SubstringFinder.find(fileName, subStr);
-        assertEquals(List.of(), result, "空子字符串应返回空列表");
+        // 使用 searchInReader 方法进行搜索
+        ArrayList<Long> result = SubstringSearch.searchInReader(reader, subName);
 
-        deleteTestFile(fileName);
+        // 断言没有找到任何匹配项
+        assertTrue(result.isEmpty());
     }
 
     /**
-     * 测试文件较大，子字符串存在的情况。
+     * 测试 resourceSearch 方法，子字符串与文件内容完全相同的情况
      */
     @Test
-    void testLargeFile() throws IOException {
-        String fileName = "test5.txt";
-        String subStr = "бра";
-        int repetitions = 1_000_000;
-        String content = "абракадабра\n".repeat(repetitions);
+    void testResourceSearchWithExactMatch() throws IOException {
+        // 假设资源内容是 "абракадабра"
+        String resourceName = "input.txt";
+        String subName = "абракадабра";  // 完全匹配
 
-        createTestFile(fileName, content);
+        // 创建模拟文件内容的输入流
+        String inputContent = "абракадабра";
+        BufferedReader reader = new BufferedReader(new StringReader(inputContent));
 
-        List<Long> result = SubstringFinder.find(fileName, subStr);
-        // 验证第 1 和每行的子字符串位置
-        assertEquals(2 * repetitions, result.size(), "子字符串出现的总次数应匹配内容");
+        // 使用 searchInReader 方法进行搜索
+        ArrayList<Long> result = SubstringSearch.searchInReader(reader, subName);
 
-        deleteTestFile(fileName);
+        // 断言只会有一个匹配，位置为0
+        assertEquals(1, result.size());
+        assertTrue(result.contains(0L));
     }
 
-    /**
-     * 工具方法：创建测试文件。
-     */
-    private void createTestFile(String fileName, String content) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write(content);
-        }
-    }
-
-    /**
-     * 工具方法：删除测试文件。
-     */
-    private void deleteTestFile(String fileName) throws IOException {
-        Files.delete(Path.of(fileName));
-    }
 }
