@@ -113,7 +113,6 @@ public class SubstringSearch {
                 }
             }
         }
-
         return indexes;
     }
 }
