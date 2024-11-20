@@ -18,11 +18,9 @@ public class SubstringSearch {
      *
      * @param resourceName 资源文件的名称
      * @param subName      要搜索的子字符串
-     * @return 子字符串在资源文件中所有出现的起始索引列表
      * @throws ResourceReadException 如果资源读取失败或资源未找到
      */
-    public static ArrayList<Long> resourceSearch(String resourceName, String subName)
-            throws ResourceReadException {
+    public static void resourceSearch(String resourceName, String subName) throws ResourceReadException {
         ArrayList<Long> indexes = new ArrayList<>();
         int subLength = subName.length();
         StringBuilder current = new StringBuilder(); // 用于保存滑动窗口内容
@@ -39,7 +37,7 @@ public class SubstringSearch {
 
             // 如果资源内容长度小于子字符串，直接返回空列表
             if (readChars < subLength) {
-                return indexes;
+                return;
             }
 
             // 初始化滑动窗口内容
@@ -66,7 +64,6 @@ public class SubstringSearch {
             throw new ResourceReadException("资源未找到: " + resourceName, e);
         }
 
-        return indexes;
     }
 
     /**
