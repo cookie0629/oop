@@ -64,22 +64,4 @@ public class SubstringFinder {
 
         return indices;
     }
-
-    /**
-     * 主方法用于测试功能。
-     *
-     * @param args 命令行参数
-     */
-    public static void main(String[] args) {
-        // 示例测试
-        String fileName = "input.txt";
-        String subStr = "бра";
-
-        try {
-            List<Long> result = find(fileName, subStr);
-            System.out.println("子字符串起始索引: " + result);
-        } catch (IOException e) {
-            System.err.println("文件读取失败: " + e.getMessage());
-        }
-    }
 }

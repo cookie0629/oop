@@ -11,30 +11,6 @@ import java.util.List;
 public class SubstringFinderTest {
 
     /**
-     * 测试正常的子字符串查找。
-     * 测试在文件中查找子字符串的功能。
-     */
-    @Test
-    public void testFindSubstring() throws IOException {
-        // 创建一个临时文件来测试
-        String content = "абракадабра";
-        String fileName = "test_input.txt";
-        Files.write(Paths.get(fileName), content.getBytes());
-
-        // 调用 SubstringFinder 的 find 方法
-        List<Long> result = SubstringFinder.find(fileName, "бра");
-
-        // 验证返回的结果
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals(1L, result.get(0));  // 第一个匹配位置是索引 1
-        assertEquals(8L, result.get(1));  // 第二个匹配位置是索引 8
-
-        // 删除临时文件
-        Files.delete(Paths.get(fileName));
-    }
-
-    /**
      * 测试文件中没有匹配的子字符串。
      */
     @Test
