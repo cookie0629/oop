@@ -175,7 +175,7 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static java.util.ArrayList&lt;java.lang.Long&gt;</code></td>
+<td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resourceSearch(java.lang.String,java.lang.String)">resourceSearch</a></span>&#8203;(java.lang.String&nbsp;resourceName,
               java.lang.String&nbsp;subName)</code></th>
 <td class="colLast">
@@ -239,16 +239,14 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>resourceSearch</h4>
-<pre class="methodSignature">public static&nbsp;java.util.ArrayList&lt;java.lang.Long&gt;&nbsp;resourceSearch&#8203;(java.lang.String&nbsp;resourceName,
-                                                                 java.lang.String&nbsp;subName)
-                                                          throws <a href="ResourceReadException.html" title="class in ru.nsu.zhao">ResourceReadException</a></pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;resourceSearch&#8203;(java.lang.String&nbsp;resourceName,
+                                  java.lang.String&nbsp;subName)
+                           throws <a href="ResourceReadException.html" title="class in ru.nsu.zhao">ResourceReadException</a></pre>
 <div class="block">在资源文件中搜索指定的子字符串，并返回其所有出现的起始索引。</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>resourceName</code> - 资源文件的名称</dd>
 <dd><code>subName</code> - 要搜索的子字符串</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>子字符串在资源文件中所有出现的起始索引列表</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="ResourceReadException.html" title="class in ru.nsu.zhao">ResourceReadException</a></code> - 如果资源读取失败或资源未找到</dd>
 </dl>
