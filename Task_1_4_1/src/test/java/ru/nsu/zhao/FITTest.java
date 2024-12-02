@@ -13,7 +13,7 @@ class FITTest {
         FITRecord record2 = FITRecord.createRecord("Physics", FIT.GOOD, true);
 
         // 创建 FITbook 实例并设置为公费生
-        FITbook fitbook = new FITbook(true);
+        FITBook fitbook = new FITBook(true);
         fitbook.addGrades(List.of(record1, record2));
 
         // 验证不符合奖学金条件

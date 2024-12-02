@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class FITbook {
+public class FITBook {
     private final List<List<FITRecord>> records; // 所有学期的记录
     private FIT examGrade; // 考试成绩
     private boolean examFlag; // 考试完成标志
     private final boolean budget; // 是否公费
 
-    public FITbook(boolean budget) {
+    public FITBook(boolean budget) {
         this.records = new ArrayList<>();
         this.examGrade = null;
         this.examFlag = false;
