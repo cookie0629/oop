@@ -89,13 +89,13 @@ loadScripts(document, 'script');</script>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
@@ -132,38 +132,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">FITRecord</span>
 extends java.lang.Object</pre>
-<div class="block">学生成绩记录类，记录某学期某门课程的成绩。</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Constructor</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,ru.nsu.zhao.FIT,boolean)">FITRecord</a></span>&#8203;(java.lang.String&nbsp;subjectName,
-         <a href="FIT.html" title="enum in ru.nsu.zhao">FIT</a>&nbsp;fit,
-         boolean&nbsp;isDifferentiated)</code></th>
-<td class="colLast">
-<div class="block">构造一个 FITRecord 对象。</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
 <!-- ========== METHOD SUMMARY =========== -->
 <section>
 <ul class="blockList">
@@ -180,24 +154,18 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="FIT.html" title="enum in ru.nsu.zhao">FIT</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFIT()">getFIT</a></span>()</code></th>
-<td class="colLast">
-<div class="block">获取课程的成绩。</div>
-</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScore()">getScore</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubjectName()">getSubjectName</a></span>()</code></th>
-<td class="colLast">
-<div class="block">获取课程的名称。</div>
-</td>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDifferentiated()">isDifferentiated</a></span>()</code></th>
-<td class="colLast">
-<div class="block">检查课程是否采用区分性评价。</div>
-</td>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -216,34 +184,6 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String,ru.nsu.zhao.FIT,boolean)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>FITRecord</h4>
-<pre>public&nbsp;FITRecord&#8203;(java.lang.String&nbsp;subjectName,
-                 <a href="FIT.html" title="enum in ru.nsu.zhao">FIT</a>&nbsp;fit,
-                 boolean&nbsp;isDifferentiated)</pre>
-<div class="block">构造一个 FITRecord 对象。</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>subjectName</code> - 课程名称</dd>
-<dd><code>fit</code> - 课程的成绩</dd>
-<dd><code>isDifferentiated</code> - 是否为区分性评价</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ============ METHOD DETAIL ========== -->
 <section>
 <ul class="blockList">
@@ -251,18 +191,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getFIT()">
+<a id="getScore()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getFIT</h4>
-<pre class="methodSignature">public&nbsp;<a href="FIT.html" title="enum in ru.nsu.zhao">FIT</a>&nbsp;getFIT()</pre>
-<div class="block">获取课程的成绩。</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>课程成绩</dd>
-</dl>
+<h4>getScore</h4>
+<pre class="methodSignature">public&nbsp;<a href="FIT.html" title="enum in ru.nsu.zhao">FIT</a>&nbsp;getScore()</pre>
 </li>
 </ul>
 <a id="isDifferentiated()">
@@ -272,11 +207,6 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>isDifferentiated</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;isDifferentiated()</pre>
-<div class="block">检查课程是否采用区分性评价。</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>如果是区分性评价返回 true，否则返回 false</dd>
-</dl>
 </li>
 </ul>
 <a id="getSubjectName()">
@@ -286,11 +216,6 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getSubjectName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSubjectName()</pre>
-<div class="block">获取课程的名称。</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>课程名称</dd>
-</dl>
 </li>
 </ul>
 </li>
@@ -345,13 +270,13 @@ extends java.lang.Object</pre>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>

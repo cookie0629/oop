@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.zhao","l":"FIT"},{"p":"ru.nsu.zhao","l":"FITbook"},{"p":"ru.nsu.zhao","l":"FITRecord"}]
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.zhao","l":"FIT"},{"p":"ru.nsu.zhao","l":"FITBook"},{"p":"ru.nsu.zhao","l":"FITRecord"}]
