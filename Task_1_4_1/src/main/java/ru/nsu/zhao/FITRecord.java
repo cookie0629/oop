@@ -1,25 +1,20 @@
 package ru.nsu.zhao;
 
 public class FITRecord {
-    private final String subj; // 课程名称
-    private final FIT x1; // 成绩
+    private final String subj;
+    private final FIT score; // 成绩
     private final boolean flag; // 区分性评价标志
 
     // 私有构造函数，只允许通过工厂方法创建对象
-    private FITRecord(String subj, FIT x1, boolean flag) {
+    FITRecord(String subj, FIT score, boolean flag) {
         this.subj = subj;
-        this.x1 = x1;
+        this.score = score;
         this.flag = flag;
     }
 
-    // 工厂方法
-    public static FITRecord createRecord(String subj, FIT x1, boolean flag) {
-        return new FITRecord(subj, x1, flag);
-    }
-
-    // 成绩获取逻辑经过封装
-    public FIT getFIT() {
-        return processGrade(x1);
+    // 获取科目的分数
+    public FIT getScore() {
+        return score;
     }
 
     // 判断是否区分性评价
@@ -32,8 +27,4 @@ public class FITRecord {
         return subj;
     }
 
-    // 模拟复杂的成绩处理逻辑
-    private FIT processGrade(FIT grade) {
-        return FIT.values()[(grade.getValue() - 2) % 4];
-    }
 }

@@ -1,7 +1,6 @@
 package ru.nsu.zhao;
 
 /**
- * Represents a grade with possible values
  * 表示具有可能值的等级
  */
 public enum FIT {
