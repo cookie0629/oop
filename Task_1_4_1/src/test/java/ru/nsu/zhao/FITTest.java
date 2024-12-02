@@ -3,43 +3,34 @@ package ru.nsu.zhao;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * 测试 FIT 枚举类的功能。
- */
 class FITTest {
 
-    /**
-     * 测试 getValue() 方法是否正确返回成绩数值。
-     */
     @Test
     void testGetValue() {
-        assertEquals(5, FIT.EXCELLENT.getValue());
-        assertEquals(4, FIT.GOOD.getValue());
-        assertEquals(3, FIT.SATISFACTORY.getValue());
-        assertEquals(2, FIT.UNSATISFACTORY.getValue());
+        // 验证每个枚举实例的值
+        assertEquals(5, FIT.EXCELLENT.getValue(), "EXCELLENT 应返回 5");
+        assertEquals(4, FIT.GOOD.getValue(), "GOOD 应返回 4");
+        assertEquals(3, FIT.SATISFACTORY.getValue(), "SATISFACTORY 应返回 3");
+        assertEquals(2, FIT.UNSATISFACTORY.getValue(), "UNSATISFACTORY 应返回 2");
     }
 
-    /**
-     * 测试枚举值的数量和顺序是否正确。
-     */
-    @Test
-    void testEnumValues() {
-        FIT[] values = FIT.values();
-        assertEquals(4, values.length);
-        assertEquals(FIT.EXCELLENT, values[0]);
-        assertEquals(FIT.GOOD, values[1]);
-        assertEquals(FIT.SATISFACTORY, values[2]);
-        assertEquals(FIT.UNSATISFACTORY, values[3]);
-    }
-
-    /**
-     * 测试枚举值的名称是否正确。
-     */
     @Test
     void testEnumNames() {
-        assertEquals("EXCELLENT", FIT.EXCELLENT.name());
-        assertEquals("GOOD", FIT.GOOD.name());
-        assertEquals("SATISFACTORY", FIT.SATISFACTORY.name());
-        assertEquals("UNSATISFACTORY", FIT.UNSATISFACTORY.name());
+        // 验证枚举实例的名称是否正确
+        assertEquals("EXCELLENT", FIT.EXCELLENT.name(), "枚举名称应为 EXCELLENT");
+        assertEquals("GOOD", FIT.GOOD.name(), "枚举名称应为 GOOD");
+        assertEquals("SATISFACTORY", FIT.SATISFACTORY.name(), "枚举名称应为 SATISFACTORY");
+        assertEquals("UNSATISFACTORY", FIT.UNSATISFACTORY.name(), "枚举名称应为 UNSATISFACTORY");
+    }
+
+    @Test
+    void testEnumOrder() {
+        // 验证枚举实例的顺序
+        FIT[] fits = FIT.values();
+        assertArrayEquals(
+                new FIT[]{FIT.EXCELLENT, FIT.GOOD, FIT.SATISFACTORY, FIT.UNSATISFACTORY},
+                fits,
+                "枚举顺序应按声明的顺序排列"
+        );
     }
 }

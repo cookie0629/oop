@@ -1,51 +1,39 @@
 package ru.nsu.zhao;
 
-/**
- * 学生成绩记录类，记录某学期某门课程的成绩。
- */
 public class FITRecord {
-    private final String subjectName; // 课程名称
-    private final FIT fit; // 课程成绩
-    private final boolean isDifferentiated; // 是否为区分性评价
+    private final String subj; // 课程名称
+    private final FIT x1; // 成绩
+    private final boolean flag; // 区分性评价标志
 
-    /**
-     * 构造一个 FITRecord 对象。
-     *
-     * @param subjectName 课程名称
-     * @param fit 课程的成绩
-     * @param isDifferentiated 是否为区分性评价
-     */
-    public FITRecord(String subjectName, FIT fit, boolean isDifferentiated) {
-        this.subjectName = subjectName;
-        this.fit = fit;
-        this.isDifferentiated = isDifferentiated;
+    // 私有构造函数，只允许通过工厂方法创建对象
+    private FITRecord(String subj, FIT x1, boolean flag) {
+        this.subj = subj;
+        this.x1 = x1;
+        this.flag = flag;
     }
 
-    /**
-     * 获取课程的成绩。
-     *
-     * @return 课程成绩
-     */
+    // 工厂方法
+    public static FITRecord createRecord(String subj, FIT x1, boolean flag) {
+        return new FITRecord(subj, x1, flag);
+    }
+
+    // 成绩获取逻辑经过封装
     public FIT getFIT() {
-        return fit;
+        return processGrade(x1);
     }
 
-    /**
-     * 检查课程是否采用区分性评价。
-     *
-     * @return 如果是区分性评价返回 true，否则返回 false
-     */
+    // 判断是否区分性评价
     public boolean isDifferentiated() {
-        return isDifferentiated;
+        return flag;
     }
 
-    /**
-     * 获取课程的名称。
-     *
-     * @return 课程名称
-     */
+    // 获取课程名称
     public String getSubjectName() {
-        return subjectName;
+        return subj;
+    }
+
+    // 模拟复杂的成绩处理逻辑
+    private FIT processGrade(FIT grade) {
+        return FIT.values()[(grade.getValue() - 2) % 4];
     }
 }
-
