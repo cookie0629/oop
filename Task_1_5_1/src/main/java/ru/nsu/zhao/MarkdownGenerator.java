@@ -1,39 +1,33 @@
 package ru.nsu.zhao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
-// 抽象的 Markdown 元素基类
+/**
+ * 基础类 Element 表示 Markdown 的通用元素。
+ */
 abstract class Element {
-    // 序列化为 Markdown 格式字符串的方法
+    /**
+     * 序列化为 Markdown 格式字符串。
+     *
+     * @return Markdown 格式字符串
+     */
     public abstract String toMarkdown();
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        return this.toMarkdown().equals(((Element) obj).toMarkdown());
-    }
-}
-
-// 表示加粗文本的类
-class Bold extends Element {
-    private final String content;
-
-    public Bold(String content) {
-        this.content = content;
-    }
+    public abstract boolean equals(Object obj);
 
     @Override
-    public String toMarkdown() {
-        return "**" + content + "**";
-    }
+    public abstract int hashCode();
 }
 
-// 表示普通文本的类
+/**
+ * Text 类表示带有格式的文本元素。
+ */
 class Text extends Element {
     private final String content;
 
+    // 构造函数
     public Text(String content) {
         this.content = content;
     }
@@ -42,125 +36,159 @@ class Text extends Element {
     public String toMarkdown() {
         return content;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Text text = (Text) obj;
+        return Objects.equals(content, text.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(content);
+    }
+
+    /**
+     * Bold 类表示加粗文本。
+     */
+    public static class Bold extends Text {
+        public Bold(String content) {
+            super(content);
+        }
+
+        @Override
+        public String toMarkdown() {
+            return "**" + super.toMarkdown() + "**";
+        }
+    }
+
+    /**
+     * Italic 类表示斜体文本。
+     */
+    public static class Italic extends Text {
+        public Italic(String content) {
+            super(content);
+        }
+
+        @Override
+        public String toMarkdown() {
+            return "*" + super.toMarkdown() + "*";
+        }
+    }
 }
 
-// 表格类
+/**
+ * Table 类表示 Markdown 表格。
+ */
 class Table extends Element {
-    // 对齐方式的常量
-    public static final String ALIGN_LEFT = ":---";
-    public static final String ALIGN_RIGHT = "---:";
-    public static final String ALIGN_CENTER = ":---:";
+    private final List<String[]> rows; // 表格的行
+    private final String[] alignments; // 每列的对齐方式
 
-    private final List<String[]> rows;
-    private final List<String> alignments;
+    public static final String ALIGN_LEFT = ":--";
+    public static final String ALIGN_RIGHT = "--:";
+    public static final String ALIGN_CENTER = ":--:";
 
-    private Table(List<String[]> rows, List<String> alignments) {
-        this.rows = rows;
-        this.alignments = alignments;
+    private Table(Builder builder) {
+        this.rows = new ArrayList<>(builder.rows);
+        this.alignments = builder.alignments;
     }
 
     @Override
     public String toMarkdown() {
-        StringBuilder markdown = new StringBuilder();
-
+        StringBuilder sb = new StringBuilder();
         // 添加表头
         if (!rows.isEmpty()) {
-            markdown.append("| ");
-            for (String header : rows.get(0)) {
-                markdown.append(header).append(" | ");
-            }
-            markdown.append("\n| ");
-
-            // 添加对齐方式
-            for (String alignment : alignments) {
-                markdown.append(alignment).append(" | ");
-            }
-            markdown.append("\n");
+            sb.append(formatRow(rows.get(0))).append("\n");
+            sb.append(formatAlignment()).append("\n");
         }
-
-        // 添加数据行
+        // 添加表格内容
         for (int i = 1; i < rows.size(); i++) {
-            markdown.append("| ");
-            for (String cell : rows.get(i)) {
-                markdown.append(cell).append(" | ");
-            }
-            markdown.append("\n");
+            sb.append(formatRow(rows.get(i))).append("\n");
         }
-
-        return markdown.toString();
+        return sb.toString().trim();
     }
 
-    // Table 的 Builder 类
+    private String formatRow(String[] row) {
+        return "| " + String.join(" | ", row) + " |";
+    }
+
+    private String formatAlignment() {
+        return "| " + String.join(" | ", alignments) + " |";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Table table = (Table) obj;
+        return rows.equals(table.rows) && Arrays.equals(alignments, table.alignments);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(rows);
+        result = 31 * result + Arrays.hashCode(alignments);
+        return result;
+    }
+
+    /**
+     * Builder 模式用于构建 Table。
+     */
     public static class Builder {
         private final List<String[]> rows = new ArrayList<>();
-        private final List<String> alignments = new ArrayList<>();
-        private int rowLimit = Integer.MAX_VALUE; // 默认行数限制
+        private String[] alignments;
+        private int rowLimit = Integer.MAX_VALUE;
 
-        // 设置对齐方式
         public Builder withAlignments(String... alignments) {
-            this.alignments.clear();
-            for (String alignment : alignments) {
-                this.alignments.add(alignment);
-            }
+            this.alignments = alignments;
             return this;
         }
 
-        // 设置最大行数
         public Builder withRowLimit(int limit) {
             this.rowLimit = limit;
             return this;
         }
 
-        // 添加一行数据
-        public Builder addRow(Object... cells) {
+        public Builder addRow(Object... values) {
             if (rows.size() >= rowLimit) {
                 throw new IllegalStateException("Row limit exceeded.");
             }
-            String[] row = new String[cells.length];
-            for (int i = 0; i < cells.length; i++) {
-                if (cells[i] instanceof Element) {
-                    row[i] = ((Element) cells[i]).toMarkdown();
-                } else {
-                    row[i] = cells[i].toString();
-                }
-            }
-            rows.add(row);
+            rows.add(Arrays.stream(values)
+                    .map(value -> value instanceof Element ? ((Element) value).toMarkdown() : value.toString())
+                    .toArray(String[]::new));
             return this;
         }
 
-        // 构建最终的 Table 对象
         public Table build() {
-            if (rows.isEmpty()) {
-                throw new IllegalStateException("Table must have at least one row (header).");
+            if (alignments == null || alignments.length == 0) {
+                throw new IllegalStateException("Alignments must be specified.");
             }
-            while (alignments.size() < rows.get(0).length) {
-                alignments.add(ALIGN_LEFT); // 默认左对齐
-            }
-            return new Table(rows, alignments);
+            return new Table(this);
         }
     }
 }
 
-// 测试代码
-public class MarkdownGenerator {
+/**
+ * 示例代码
+ */
+class Main {
     public static void main(String[] args) {
-        // 创建一个表格构建器并配置表格
         Table.Builder tableBuilder = new Table.Builder()
                 .withAlignments(Table.ALIGN_RIGHT, Table.ALIGN_LEFT)
                 .withRowLimit(8)
-                .addRow("Index", "Random"); // 添加表头
+                .addRow("Index", "Random");
 
-        // 随机生成数据并填充表格
         for (int i = 1; i <= 5; i++) {
             final var value = (int) (Math.random() * 10);
             if (value > 5) {
-                tableBuilder.addRow(i, new Bold(String.valueOf(value))); // 加粗大于 5 的数字
+                tableBuilder.addRow(i, new Text.Bold(String.valueOf(value)));
             } else {
                 tableBuilder.addRow(i, (int) (Math.random() * 10));
             }
         }
 
-        // 打印生成的 Markdown 表格
-        System.out.println(tableBuilder.build().toMarkdown());
+        System.out.println(tableBuilder.build());
     }
 }
