@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"ru.nsu.zhao","c":"MarkdownGenerator","l":"main(String[])","url":"main(java.lang.String[])"},{"p":"ru.nsu.zhao","c":"MarkdownGenerator","l":"MarkdownGenerator()","url":"%3Cinit%3E()"}]
