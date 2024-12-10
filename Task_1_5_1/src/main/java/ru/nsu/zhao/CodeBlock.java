@@ -1,9 +1,7 @@
 package ru.nsu.zhao;
 
-import java.util.Objects;
-
 /**
- * 表示 Markdown 代码块。
+ * 表示 Markdown 代码块.
  */
 public class CodeBlock implements Element {
     private final String language;
@@ -18,5 +16,4 @@ public class CodeBlock implements Element {
     public String toMarkdown() {
         return "```" + language + "\n" + code + "\n```";
     }
-
 }

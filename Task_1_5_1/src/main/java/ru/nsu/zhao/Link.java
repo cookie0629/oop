@@ -1,9 +1,7 @@
 package ru.nsu.zhao;
 
-import java.util.Objects;
-
 /**
- * 表示 Markdown 超链接或图片。
+ * 表示 Markdown 链接.
  */
 public class Link implements Element {
     private final String text;
@@ -18,7 +16,4 @@ public class Link implements Element {
     public String toMarkdown() {
         return "[" + text + "](" + url + ")";
     }
-
 }
-
-

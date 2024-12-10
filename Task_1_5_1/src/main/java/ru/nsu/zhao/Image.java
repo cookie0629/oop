@@ -1,7 +1,8 @@
 package ru.nsu.zhao;
 
-import java.util.Objects;
-
+/**
+ * 表示 Markdown 图片.
+ */
 public class Image implements Element {
     private final String altText;
     private final String url;
@@ -15,5 +16,4 @@ public class Image implements Element {
     public String toMarkdown() {
         return "![" + altText + "](" + url + ")";
     }
-
 }
