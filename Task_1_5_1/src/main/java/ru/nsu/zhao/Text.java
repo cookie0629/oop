@@ -1,0 +1,57 @@
+package ru.nsu.zhao;
+
+import java.util.Objects;
+
+/**
+ * 表示 Markdown 的文本及其格式。
+ */
+public class Text extends Element {
+    private final String content;
+
+    private Text(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public String toMarkdown() {
+        return content;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Text)) return false;
+        Text text = (Text) obj;
+        return Objects.equals(content, text.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(content);
+    }
+
+    // 工厂方法定义不同的文本样式
+    public static class Bold extends Text {
+        public Bold(String content) {
+            super("**" + content + "**");
+        }
+    }
+
+    public static class Italic extends Text {
+        public Italic(String content) {
+            super("*" + content + "*");
+        }
+    }
+
+    public static class Strikethrough extends Text {
+        public Strikethrough(String content) {
+            super("~~" + content + "~~");
+        }
+    }
+
+    public static class InlineCode extends Text {
+        public InlineCode(String content) {
+            super("`" + content + "`");
+        }
+    }
+}
