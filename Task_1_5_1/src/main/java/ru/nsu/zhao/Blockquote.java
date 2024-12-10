@@ -25,8 +25,7 @@ public class Blockquote extends Element {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Blockquote)) return false;
-        Blockquote that = (Blockquote) obj;
+        if (!(obj instanceof Blockquote that)) return false;
         return Objects.equals(content, that.content);
     }
 
