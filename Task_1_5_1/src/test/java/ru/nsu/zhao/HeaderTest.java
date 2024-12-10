@@ -1,29 +1,36 @@
 package ru.nsu.zhao;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * HeaderTest 单元测试
- */
 class HeaderTest {
 
     @Test
-    void testHeaderToMarkdown() {
-        Header header1 = new Header(1, "Main Title");
-        Header header6 = new Header(6, "Sub Title");
-
-        assertEquals("# Main Title", header1.toMarkdown());
-        assertEquals("###### Sub Title", header6.toMarkdown());
+    void testToMarkdown() {
+        Header header = new Header("Header Content", 3);
+        String expected = "### Header Content";
+        assertEquals(expected, header.toMarkdown());
     }
 
     @Test
-    void testHeaderEquality() {
-        Header header1A = new Header(1, "Main Title");
-        Header header1B = new Header(1, "Main Title");
-        Header header2 = new Header(2, "Another Title");
+    void testInvalidLevel() {
+        assertThrows(IllegalArgumentException.class, () -> new Header("Invalid", 0));
+        assertThrows(IllegalArgumentException.class, () -> new Header("Invalid", 7));
+    }
 
-        assertEquals(header1A, header1B);
-        assertNotEquals(header1A, header2);
+    @Test
+    void testEqualsAndHashCode() {
+        Header h1 = new Header("Content", 2);
+        Header h2 = new Header("Content", 2);
+        Header h3 = new Header("Different", 2);
+        Header h4 = new Header("Content", 3);
+
+        assertEquals(h1, h2);
+        assertNotEquals(h1, h3);
+        assertNotEquals(h1, h4);
+        assertEquals(h1.hashCode(), h2.hashCode());
+        assertNotEquals(h1.hashCode(), h3.hashCode());
+        assertNotEquals(h1.hashCode(), h4.hashCode());
     }
 }

@@ -5,26 +5,24 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 表示 Markdown 列表，支持有序和无序列表。
+ * 表示 Markdown 列表元素（有序或无序）。
  */
 public class ListElement extends Element {
     private final List<String> items;
     private final boolean ordered;
 
-    public ListElement(boolean ordered) {
-        this.ordered = ordered;
-        this.items = new ArrayList<>();
-    }
-
     /**
-     * 添加一个列表项。
+     * 构造函数。
      *
-     * @param item 列表项内容
-     * @return 当前 ListElement 实例（链式调用）
+     * @param items   列表项
+     * @param ordered 是否为有序列表
      */
-    public ListElement addItem(String item) {
-        items.add(item);
-        return this;
+    public ListElement(List<String> items, boolean ordered) {
+        if (items == null || items.isEmpty()) {
+            throw new IllegalArgumentException("列表项不能为空");
+        }
+        this.items = new ArrayList<>(items);
+        this.ordered = ordered;
     }
 
     @Override
@@ -37,15 +35,15 @@ public class ListElement extends Element {
                 markdown.append("- ").append(items.get(i)).append("\n");
             }
         }
-        return markdown.toString();
+        return markdown.toString().trim();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof ListElement)) return false;
-        ListElement list = (ListElement) obj;
-        return ordered == list.ordered && Objects.equals(items, list.items);
+        ListElement that = (ListElement) obj;
+        return ordered == that.ordered && Objects.equals(items, that.items);
     }
 
     @Override

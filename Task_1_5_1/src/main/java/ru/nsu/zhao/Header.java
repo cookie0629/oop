@@ -3,24 +3,24 @@ package ru.nsu.zhao;
 import java.util.Objects;
 
 /**
- * 表示 Markdown 标题。
+ * 表示 Markdown 的标题元素。
  */
 public class Header extends Element {
-    private final int level;
     private final String content;
+    private final int level;
 
     /**
      * 构造函数。
      *
-     * @param level   标题级别（1-6）
      * @param content 标题内容
+     * @param level   标题级别 (1 到 6)
      */
-    public Header(int level, String content) {
+    public Header(String content, int level) {
         if (level < 1 || level > 6) {
             throw new IllegalArgumentException("标题级别必须在 1 到 6 之间");
         }
-        this.level = level;
         this.content = content;
+        this.level = level;
     }
 
     @Override
@@ -38,6 +38,6 @@ public class Header extends Element {
 
     @Override
     public int hashCode() {
-        return Objects.hash(level, content);
+        return Objects.hash(content, level);
     }
 }
