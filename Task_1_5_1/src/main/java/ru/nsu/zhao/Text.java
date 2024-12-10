@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * 表示 Markdown 的文本及其格式。
  */
-public class Text extends Element {
+public class Text implements Element {
     private final String content;
 
     private Text(String content) {
@@ -15,19 +15,6 @@ public class Text extends Element {
     @Override
     public String toMarkdown() {
         return content;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Text)) return false;
-        Text text = (Text) obj;
-        return Objects.equals(content, text.content);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(content);
     }
 
     // 工厂方法定义不同的文本样式

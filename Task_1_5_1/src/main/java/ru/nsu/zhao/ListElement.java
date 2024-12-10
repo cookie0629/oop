@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * 表示 Markdown 列表，支持有序和无序列表。
  */
-public class ListElement extends Element {
+public class ListElement implements Element {
     private final List<String> items;
     private final boolean ordered;
 
@@ -40,16 +40,4 @@ public class ListElement extends Element {
         return markdown.toString();
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof ListElement)) return false;
-        ListElement list = (ListElement) obj;
-        return ordered == list.ordered && Objects.equals(items, list.items);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(items, ordered);
-    }
 }

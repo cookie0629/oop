@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * 表示 Markdown 引用块。
  */
-public class Blockquote extends Element {
+public class Blockquote implements Element {
     private final String content;
 
     /**
@@ -22,16 +22,4 @@ public class Blockquote extends Element {
         return "> " + content.replaceAll("\n", "\n> ");
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Blockquote)) return false;
-        Blockquote that = (Blockquote) obj;
-        return Objects.equals(content, that.content);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(content);
-    }
 }

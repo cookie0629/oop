@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * 表示 Markdown 标题。
  */
-public class Header extends Element {
+public class Header implements Element {
     private final int level;
     private final String content;
 
@@ -28,16 +28,4 @@ public class Header extends Element {
         return "#".repeat(level) + " " + content;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Header)) return false;
-        Header header = (Header) obj;
-        return level == header.level && Objects.equals(content, header.content);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(level, content);
-    }
 }

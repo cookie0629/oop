@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * 表示 Markdown 任务列表。
  */
-public class Task extends Element {
+public class Task implements Element {
     private final List<TaskItem> tasks = new ArrayList<>();
 
     /**
@@ -56,17 +56,5 @@ public class Task extends Element {
             this.done = done;
         }
 
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) return true;
-            if (!(obj instanceof TaskItem)) return false;
-            TaskItem item = (TaskItem) obj;
-            return done == item.done && Objects.equals(content, item.content);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(content, done);
-        }
     }
 }
