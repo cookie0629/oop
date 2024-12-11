@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6};
+var data = {"i0":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -89,13 +89,13 @@ loadScripts(document, 'script');</script>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
@@ -115,55 +115,25 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <main role="main">
 <div class="header">
 <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">ru.nsu.zhao</a></div>
-<h2 title="Class Element" class="title">Class Element</h2>
+<h2 title="Interface Element" class="title">Interface Element</h2>
 </div>
 <div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>ru.nsu.zhao.Element</li>
-</ul>
-</li>
-</ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
 <dl>
-<dt>Direct Known Subclasses:</dt>
-<dd><code><a href="Blockquote.html" title="class in ru.nsu.zhao">Blockquote</a></code>, <code><a href="CodeBlock.html" title="class in ru.nsu.zhao">CodeBlock</a></code>, <code><a href="Header.html" title="class in ru.nsu.zhao">Header</a></code>, <code><a href="Image.html" title="class in ru.nsu.zhao">Image</a></code>, <code><a href="Link.html" title="class in ru.nsu.zhao">Link</a></code>, <code><a href="ListElement.html" title="class in ru.nsu.zhao">ListElement</a></code>, <code><a href="Task.html" title="class in ru.nsu.zhao">Task</a></code>, <code><a href="Text.html" title="class in ru.nsu.zhao">Text</a></code></dd>
+<dt>All Known Implementing Classes:</dt>
+<dd><code><a href="Blockquote.html" title="class in ru.nsu.zhao">Blockquote</a></code>, <code><a href="CodeBlock.html" title="class in ru.nsu.zhao">CodeBlock</a></code>, <code><a href="Header.html" title="class in ru.nsu.zhao">Header</a></code>, <code><a href="Image.html" title="class in ru.nsu.zhao">Image</a></code>, <code><a href="Link.html" title="class in ru.nsu.zhao">Link</a></code>, <code><a href="Table.html" title="class in ru.nsu.zhao">Table</a></code>, <code><a href="TaskList.html" title="class in ru.nsu.zhao">TaskList</a></code>, <code><a href="Text.html" title="class in ru.nsu.zhao">Text</a></code>, <code><a href="Text.Bold.html" title="class in ru.nsu.zhao">Text.Bold</a></code>, <code><a href="Text.InlineCode.html" title="class in ru.nsu.zhao">Text.InlineCode</a></code>, <code><a href="Text.Italic.html" title="class in ru.nsu.zhao">Text.Italic</a></code>, <code><a href="Text.Strikethrough.html" title="class in ru.nsu.zhao">Text.Strikethrough</a></code></dd>
 </dl>
 <hr>
-<pre>public abstract class <span class="typeNameLabel">Element</span>
-extends java.lang.Object</pre>
-<div class="block">抽象基类，表示所有 Markdown 元素。</div>
+<pre>public interface <span class="typeNameLabel">Element</span></pre>
+<div class="block">接口，表示所有 Markdown 元素.</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Constructor</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Element</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
 <!-- ========== METHOD SUMMARY =========== -->
 <section>
 <ul class="blockList">
@@ -179,34 +149,13 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>abstract boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;obj)</code></th>
-<td class="colLast">
-<div class="block">检查两个元素是否相等。</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>abstract int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
-<td class="colLast">
-<div class="block">返回元素的哈希值。</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>abstract java.lang.String</code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toMarkdown()">toMarkdown</a></span>()</code></th>
 <td class="colLast">
-<div class="block">将元素序列化为 Markdown 格式的字符串。</div>
+<div class="block">将元素序列化为 Markdown 格式的字符串.</div>
 </td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, finalize, getClass, notify, notifyAll, toString, wait, wait, wait</code></li>
-</ul>
 </li>
 </ul>
 </section>
@@ -216,25 +165,6 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>Element</h4>
-<pre>public&nbsp;Element()</pre>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ============ METHOD DETAIL ========== -->
 <section>
 <ul class="blockList">
@@ -245,48 +175,14 @@ extends java.lang.Object</pre>
 <a id="toMarkdown()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>toMarkdown</h4>
-<pre class="methodSignature">public abstract&nbsp;java.lang.String&nbsp;toMarkdown()</pre>
-<div class="block">将元素序列化为 Markdown 格式的字符串。</div>
+<pre class="methodSignature">java.lang.String&nbsp;toMarkdown()</pre>
+<div class="block">将元素序列化为 Markdown 格式的字符串.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Markdown 格式的字符串</dd>
-</dl>
-</li>
-</ul>
-<a id="equals(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>equals</h4>
-<pre class="methodSignature">public abstract&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;obj)</pre>
-<div class="block">检查两个元素是否相等。</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>obj</code> - 要比较的对象</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>如果相等返回 true，否则返回 false</dd>
-</dl>
-</li>
-</ul>
-<a id="hashCode()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>hashCode</h4>
-<pre class="methodSignature">public abstract&nbsp;int&nbsp;hashCode()</pre>
-<div class="block">返回元素的哈希值。</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>元素的哈希值</dd>
 </dl>
 </li>
 </ul>
@@ -342,13 +238,13 @@ extends java.lang.Object</pre>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
