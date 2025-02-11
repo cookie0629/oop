@@ -76,6 +76,10 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PrimeCheck</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">质数检查工具类，提供三种方法：
+ 1. 顺序执行
+ 2. 使用 parallelStream() 并行执行
+ 3. 使用多线程 (Threads) 并行执行</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -103,41 +107,21 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#generatePrimes(int)" class="member-name-link">generatePrimes</a><wbr>(int&nbsp;count)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">生成一个包含指定个数质数的数组。
- 注意：本方法采用简单的穷举方法，适合生成中等规模的数据集，
- 用于展示多核 CPU 在高计算量场景下的加速效果。</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isPrime(int)" class="member-name-link">isPrime</a><wbr>(int&nbsp;n)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">判断一个整数是否为质数。
- 定义：质数必须大于 1，且只能被 1 和其本身整除。</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#main(java.lang.String%5B%5D)" class="member-name-link">main</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#parallelHasNonPrimeWithThreads(int%5B%5D,int)" class="member-name-link">parallelHasNonPrimeWithThreads</a><wbr>(int[]&nbsp;arr,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#parallelHasNonPrimeWithThreads(int%5B%5D,int)" class="member-name-link">parallelHasNonPrimeWithThreads</a><wbr>(int[]&nbsp;numbers,
  int&nbsp;threadCount)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">**使用多线程 (Threads) 并行检查**数组中是否包含非质数。</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#parallelStreamHasNonPrime(int%5B%5D)" class="member-name-link">parallelStreamHasNonPrime</a><wbr>(int[]&nbsp;numbers)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">方案 2：使用 java.lang.Thread 实现并行检查
- 将数组划分为若干段，每个线程检查一段中的数字是否都是质数，
- 如果任一线程发现非质数，则设置共享标志 foundComposite。</div>
+<div class="block">**使用 parallelStream() 并行检查**数组中是否包含非质数。</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#parallelStreamHasNonPrime(int%5B%5D)" class="member-name-link">parallelStreamHasNonPrime</a><wbr>(int[]&nbsp;arr)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sequentialHasNonPrime(int%5B%5D)" class="member-name-link">sequentialHasNonPrime</a><wbr>(int[]&nbsp;numbers)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">方案 3：使用 parallelStream() 实现并行检查
- 利用 Java 8 的并行流检查数组中是否存在非质数。</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sequentialHasNonPrime(int%5B%5D)" class="member-name-link">sequentialHasNonPrime</a><wbr>(int[]&nbsp;arr)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">方案 1：顺序检查
- 遍历数组，如果发现任一数字不是质数，则返回 true。</div>
+<div class="block">**顺序执行**检查数组中是否包含非质数。</div>
 </div>
 </div>
 </div>
@@ -171,83 +155,49 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="isPrime(int)">
-<h3>isPrime</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPrime</span><wbr><span class="parameters">(int&nbsp;n)</span></div>
-<div class="block">判断一个整数是否为质数。
- 定义：质数必须大于 1，且只能被 1 和其本身整除。</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>n</code> - 要判断的整数</dd>
-<dt>Returns:</dt>
-<dd>如果 n 是质数则返回 true，否则返回 false</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="sequentialHasNonPrime(int[])">
 <h3>sequentialHasNonPrime</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">sequentialHasNonPrime</span><wbr><span class="parameters">(int[]&nbsp;arr)</span></div>
-<div class="block">方案 1：顺序检查
- 遍历数组，如果发现任一数字不是质数，则返回 true。</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">sequentialHasNonPrime</span><wbr><span class="parameters">(int[]&nbsp;numbers)</span></div>
+<div class="block">**顺序执行**检查数组中是否包含非质数。</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>arr</code> - 整数数组</dd>
+<dd><code>numbers</code> - 需要检查的整数数组</dd>
 <dt>Returns:</dt>
-<dd>如果存在非质数则返回 true，否则返回 false</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="parallelHasNonPrimeWithThreads(int[],int)">
-<h3>parallelHasNonPrimeWithThreads</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">parallelHasNonPrimeWithThreads</span><wbr><span class="parameters">(int[]&nbsp;arr,
- int&nbsp;threadCount)</span></div>
-<div class="block">方案 2：使用 java.lang.Thread 实现并行检查
- 将数组划分为若干段，每个线程检查一段中的数字是否都是质数，
- 如果任一线程发现非质数，则设置共享标志 foundComposite。</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>arr</code> - 整数数组</dd>
-<dd><code>threadCount</code> - 使用的线程数</dd>
-<dt>Returns:</dt>
-<dd>如果存在非质数则返回 true，否则返回 false</dd>
+<dd>如果数组中存在非质数，返回 true；否则返回 false</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="parallelStreamHasNonPrime(int[])">
 <h3>parallelStreamHasNonPrime</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">parallelStreamHasNonPrime</span><wbr><span class="parameters">(int[]&nbsp;arr)</span></div>
-<div class="block">方案 3：使用 parallelStream() 实现并行检查
- 利用 Java 8 的并行流检查数组中是否存在非质数。</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">parallelStreamHasNonPrime</span><wbr><span class="parameters">(int[]&nbsp;numbers)</span></div>
+<div class="block">**使用 parallelStream() 并行检查**数组中是否包含非质数。</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>arr</code> - 整数数组</dd>
+<dd><code>numbers</code> - 需要检查的整数数组</dd>
 <dt>Returns:</dt>
-<dd>如果存在非质数则返回 true，否则返回 false</dd>
+<dd>如果数组中存在非质数，返回 true；否则返回 false</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="generatePrimes(int)">
-<h3>generatePrimes</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int[]</span>&nbsp;<span class="element-name">generatePrimes</span><wbr><span class="parameters">(int&nbsp;count)</span></div>
-<div class="block">生成一个包含指定个数质数的数组。
- 注意：本方法采用简单的穷举方法，适合生成中等规模的数据集，
- 用于展示多核 CPU 在高计算量场景下的加速效果。</div>
+<section class="detail" id="parallelHasNonPrimeWithThreads(int[],int)">
+<h3>parallelHasNonPrimeWithThreads</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">parallelHasNonPrimeWithThreads</span><wbr><span class="parameters">(int[]&nbsp;numbers,
+ int&nbsp;threadCount)</span>
+                                              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutionException.html" title="class or interface in java.util.concurrent" class="external-link">ExecutionException</a></span></div>
+<div class="block">**使用多线程 (Threads) 并行检查**数组中是否包含非质数。</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>count</code> - 需要生成的质数个数</dd>
+<dd><code>numbers</code> - 需要检查的整数数组</dd>
+<dd><code>threadCount</code> - 线程数量</dd>
 <dt>Returns:</dt>
-<dd>包含 count 个质数的数组</dd>
+<dd>如果数组中存在非质数，返回 true；否则返回 false</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code> - 线程被中断时抛出异常</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutionException.html" title="class or interface in java.util.concurrent" class="external-link">ExecutionException</a></code> - 任务执行异常</dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="main(java.lang.String[])">
-<h3>main</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">main</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</span></div>
 </section>
 </li>
 </ul>
