@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.nsu.zhao.HashTableTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2024-11-11T06:09:32" hostname="COOKIE" time="0.052">
+  <properties/>
+  <testcase name="testGet()" classname="ru.nsu.zhao.HashTableTest" time="0.032"/>
+  <testcase name="testPut()" classname="ru.nsu.zhao.HashTableTest" time="0.001"/>
+  <testcase name="testToString()" classname="ru.nsu.zhao.HashTableTest" time="0.007"/>
+  <testcase name="testContainsKey()" classname="ru.nsu.zhao.HashTableTest" time="0.002"/>
+  <testcase name="testEquals()" classname="ru.nsu.zhao.HashTableTest" time="0.002"/>
+  <testcase name="testRemove()" classname="ru.nsu.zhao.HashTableTest" time="0.001"/>
+  <testcase name="testUpdate()" classname="ru.nsu.zhao.HashTableTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
