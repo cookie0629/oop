@@ -48,14 +48,45 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:M">M</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
+<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
+<h2 class="title" id="I:G">G</h2>
+<dl class="index">
+<dt><a href="ru/nsu/zhao/PrimeCheck.html#generatePrimes(int)" class="member-name-link">generatePrimes(int)</a> - Static method in class ru.nsu.zhao.<a href="ru/nsu/zhao/PrimeCheck.html" title="class in ru.nsu.zhao">PrimeCheck</a></dt>
+<dd>
+<div class="block">生成一个包含指定个数质数的数组。
+ 注意：本方法采用简单的穷举方法，适合生成中等规模的数据集，
+ 用于展示多核 CPU 在高计算量场景下的加速效果。</div>
+</dd>
+</dl>
+<h2 class="title" id="I:I">I</h2>
+<dl class="index">
+<dt><a href="ru/nsu/zhao/PrimeCheck.html#isPrime(int)" class="member-name-link">isPrime(int)</a> - Static method in class ru.nsu.zhao.<a href="ru/nsu/zhao/PrimeCheck.html" title="class in ru.nsu.zhao">PrimeCheck</a></dt>
+<dd>
+<div class="block">判断一个整数是否为质数。
+ 定义：质数必须大于 1，且只能被 1 和其本身整除。</div>
+</dd>
+</dl>
 <h2 class="title" id="I:M">M</h2>
 <dl class="index">
-<dt><a href="ru/nsu/zhao/Main.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class ru.nsu.zhao.<a href="ru/nsu/zhao/Main.html" title="class in ru.nsu.zhao">Main</a></dt>
+<dt><a href="ru/nsu/zhao/PrimeCheck.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class ru.nsu.zhao.<a href="ru/nsu/zhao/PrimeCheck.html" title="class in ru.nsu.zhao">PrimeCheck</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="ru/nsu/zhao/Main.html" class="type-name-link" title="class in ru.nsu.zhao">Main</a> - Class in <a href="ru/nsu/zhao/package-summary.html">ru.nsu.zhao</a></dt>
+</dl>
+<h2 class="title" id="I:P">P</h2>
+<dl class="index">
+<dt><a href="ru/nsu/zhao/PrimeCheck.html#parallelHasNonPrimeWithThreads(int%5B%5D,int)" class="member-name-link">parallelHasNonPrimeWithThreads(int[], int)</a> - Static method in class ru.nsu.zhao.<a href="ru/nsu/zhao/PrimeCheck.html" title="class in ru.nsu.zhao">PrimeCheck</a></dt>
+<dd>
+<div class="block">方案 2：使用 java.lang.Thread 实现并行检查
+ 将数组划分为若干段，每个线程检查一段中的数字是否都是质数，
+ 如果任一线程发现非质数，则设置共享标志 foundComposite。</div>
+</dd>
+<dt><a href="ru/nsu/zhao/PrimeCheck.html#parallelStreamHasNonPrime(int%5B%5D)" class="member-name-link">parallelStreamHasNonPrime(int[])</a> - Static method in class ru.nsu.zhao.<a href="ru/nsu/zhao/PrimeCheck.html" title="class in ru.nsu.zhao">PrimeCheck</a></dt>
+<dd>
+<div class="block">方案 3：使用 parallelStream() 实现并行检查
+ 利用 Java 8 的并行流检查数组中是否存在非质数。</div>
+</dd>
+<dt><a href="ru/nsu/zhao/PrimeCheck.html" class="type-name-link" title="class in ru.nsu.zhao">PrimeCheck</a> - Class in <a href="ru/nsu/zhao/package-summary.html">ru.nsu.zhao</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="ru/nsu/zhao/Main.html#%3Cinit%3E()" class="member-name-link">Main()</a> - Constructor for class ru.nsu.zhao.<a href="ru/nsu/zhao/Main.html" title="class in ru.nsu.zhao">Main</a></dt>
+<dt><a href="ru/nsu/zhao/PrimeCheck.html#%3Cinit%3E()" class="member-name-link">PrimeCheck()</a> - Constructor for class ru.nsu.zhao.<a href="ru/nsu/zhao/PrimeCheck.html" title="class in ru.nsu.zhao">PrimeCheck</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
@@ -65,10 +96,13 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:S">S</h2>
 <dl class="index">
-<dt><a href="ru/nsu/zhao/Main.html#sum(int,int)" class="member-name-link">sum(int, int)</a> - Static method in class ru.nsu.zhao.<a href="ru/nsu/zhao/Main.html" title="class in ru.nsu.zhao">Main</a></dt>
-<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/zhao/PrimeCheck.html#sequentialHasNonPrime(int%5B%5D)" class="member-name-link">sequentialHasNonPrime(int[])</a> - Static method in class ru.nsu.zhao.<a href="ru/nsu/zhao/PrimeCheck.html" title="class in ru.nsu.zhao">PrimeCheck</a></dt>
+<dd>
+<div class="block">方案 1：顺序检查
+ 遍历数组，如果发现任一数字不是质数，则返回 true。</div>
+</dd>
 </dl>
-<a href="#I:M">M</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
+<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
 </div>
 </div>
 </body>
