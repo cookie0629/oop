@@ -1,68 +1,70 @@
 package ru.nsu.zhao;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.*;
 
 /**
- * 质数检查工具类，提供三种方法：
- * 1. 顺序执行
- * 2. 使用 parallelStream() 并行执行
- * 3. 使用多线程 (Threads) 并行执行
+ * Prime number checking utility class, providing three methods:
+ * 1. Sequential execution
+ * 2. Parallel execution using parallelStream()
+ * 3. Parallel execution using multiple threads
  */
 public class PrimeCheck {
 
     /**
+     * Determines whether a number is a prime number.
      * 判断一个数是否是质数。
      *
-     * @param n 待检查的数
-     * @return 如果是质数返回 true，否则返回 false
+     * @param n The number to check / 待检查的数
+     * @return true if the number is prime; otherwise, false / 如果是质数返回 true，否则返回 false
      */
-    private static boolean is_Prime(int n) {
-        if (n < 2) return false;
+    private static boolean isPrime(int n) {
+        if (n < 2) return true;
         for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) return false;
-        }
-        return true;
-    }
-
-    /**
-     * **顺序执行**检查数组中是否包含非质数。
-     *
-     * @param numbers 需要检查的整数数组
-     * @return 如果数组中存在非质数，返回 true；否则返回 false
-     */
-    public static boolean sequentialHasNonPrime(int[] numbers) {
-        for (int num : numbers) {
-            if (!is_Prime(num)) return true;
+            if (n % i == 0) return true;
         }
         return false;
     }
 
     /**
-     * **使用 parallelStream() 并行检查**数组中是否包含非质数。
+     * **Sequential execution** checks if the array contains non-prime numbers.
+     * **顺序执行**检查数组中是否包含非质数。
      *
-     * @param numbers 需要检查的整数数组
-     * @return 如果数组中存在非质数，返回 true；否则返回 false
+     * @param numbers The array of integers to check / 需要检查的整数数组
+     * @return true if a non-prime number is found; otherwise, false / 如果数组中存在非质数，返回 true；否则返回 false
      */
-    public static boolean parallelStreamHasNonPrime(int[] numbers) {
-        List<Integer> numberList = Arrays.stream(numbers).boxed().toList();
-        return numberList.parallelStream().anyMatch(number -> !is_Prime(number));
+    public static boolean sequentialHasNonPrime(int[] numbers) {
+        for (int num : numbers) {
+            if (isPrime(num)) return true;
+        }
+        return false;
     }
 
     /**
+     * **Parallel execution using parallelStream()** checks if the array contains non-prime numbers.
+     * **使用 parallelStream() 并行检查**数组中是否包含非质数。
+     *
+     * @param numbers The array of integers to check / 需要检查的整数数组
+     * @return true if a non-prime number is found; otherwise, false / 如果数组中存在非质数，返回 true；否则返回 false
+     */
+    public static boolean parallelStreamHasNonPrime(int[] numbers) {
+        return Arrays.stream(numbers).parallel().anyMatch(PrimeCheck::isPrime);
+    }
+
+    /**
+     * **Parallel execution using multiple threads (Threads)** checks if the array contains non-prime numbers.
      * **使用多线程 (Threads) 并行检查**数组中是否包含非质数。
      *
-     * @param numbers 需要检查的整数数组
-     * @param threadCount 线程数量
-     * @return 如果数组中存在非质数，返回 true；否则返回 false
-     * @throws InterruptedException 线程被中断时抛出异常
-     * @throws ExecutionException 任务执行异常
+     * @param numbers The array of integers to check / 需要检查的整数数组
+     * @param threadCount The number of threads to use / 线程数量
+     * @return true if a non-prime number is found; otherwise, false / 如果数组中存在非质数，返回 true；否则返回 false
+     * @throws InterruptedException if the thread is interrupted / 当线程被中断时抛出异常
+     * @throws ExecutionException if a task execution error occurs / 如果任务执行异常
      */
     public static boolean parallelHasNonPrimeWithThreads(int[] numbers, int threadCount)
             throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
-        int chunkSize = (numbers.length / threadCount) + 1; // 每个线程负责的区间大小
+        int chunkSize = (numbers.length / threadCount) + 1; // Each thread's range size / 每个线程负责的区间大小
         Future<Boolean>[] futures = new Future[threadCount];
 
         for (int i = 0; i < threadCount; i++) {
@@ -70,7 +72,7 @@ public class PrimeCheck {
             final int end = Math.min(start + chunkSize, numbers.length);
             futures[i] = executor.submit(() -> {
                 for (int j = start; j < end; j++) {
-                    if (!is_Prime(numbers[j])) return true;
+                    if (isPrime(numbers[j])) return true;
                 }
                 return false;
             });
