@@ -76,10 +76,10 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PrimeCheck</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">质数检查工具类，提供三种方法：
- 1. 顺序执行
- 2. 使用 parallelStream() 并行执行
- 3. 使用多线程 (Threads) 并行执行</div>
+<div class="block">Prime number checking utility class, providing three methods:
+ 1. Sequential execution
+ 2. Parallel execution using parallelStream()
+ 3. Parallel execution using multiple threads</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -111,17 +111,17 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#parallelHasNonPrimeWithThreads(int%5B%5D,int)" class="member-name-link">parallelHasNonPrimeWithThreads</a><wbr>(int[]&nbsp;numbers,
  int&nbsp;threadCount)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">**使用多线程 (Threads) 并行检查**数组中是否包含非质数。</div>
+<div class="block">**Parallel execution using multiple threads (Threads)** checks if the array contains non-prime numbers.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#parallelStreamHasNonPrime(int%5B%5D)" class="member-name-link">parallelStreamHasNonPrime</a><wbr>(int[]&nbsp;numbers)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">**使用 parallelStream() 并行检查**数组中是否包含非质数。</div>
+<div class="block">**Parallel execution using parallelStream()** checks if the array contains non-prime numbers.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sequentialHasNonPrime(int%5B%5D)" class="member-name-link">sequentialHasNonPrime</a><wbr>(int[]&nbsp;numbers)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">**顺序执行**检查数组中是否包含非质数。</div>
+<div class="block">**Sequential execution** checks if the array contains non-prime numbers.</div>
 </div>
 </div>
 </div>
@@ -158,12 +158,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="sequentialHasNonPrime(int[])">
 <h3>sequentialHasNonPrime</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">sequentialHasNonPrime</span><wbr><span class="parameters">(int[]&nbsp;numbers)</span></div>
-<div class="block">**顺序执行**检查数组中是否包含非质数。</div>
+<div class="block">**Sequential execution** checks if the array contains non-prime numbers.
+ **顺序执行**检查数组中是否包含非质数。</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>numbers</code> - 需要检查的整数数组</dd>
+<dd><code>numbers</code> - The array of integers to check / 需要检查的整数数组</dd>
 <dt>Returns:</dt>
-<dd>如果数组中存在非质数，返回 true；否则返回 false</dd>
+<dd>true if a non-prime number is found; otherwise, false / 如果数组中存在非质数，返回 true；否则返回 false</dd>
 </dl>
 </section>
 </li>
@@ -171,12 +172,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="parallelStreamHasNonPrime(int[])">
 <h3>parallelStreamHasNonPrime</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">parallelStreamHasNonPrime</span><wbr><span class="parameters">(int[]&nbsp;numbers)</span></div>
-<div class="block">**使用 parallelStream() 并行检查**数组中是否包含非质数。</div>
+<div class="block">**Parallel execution using parallelStream()** checks if the array contains non-prime numbers.
+ **使用 parallelStream() 并行检查**数组中是否包含非质数。</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>numbers</code> - 需要检查的整数数组</dd>
+<dd><code>numbers</code> - The array of integers to check / 需要检查的整数数组</dd>
 <dt>Returns:</dt>
-<dd>如果数组中存在非质数，返回 true；否则返回 false</dd>
+<dd>true if a non-prime number is found; otherwise, false / 如果数组中存在非质数，返回 true；否则返回 false</dd>
 </dl>
 </section>
 </li>
@@ -187,16 +189,17 @@ loadScripts(document, 'script');</script>
  int&nbsp;threadCount)</span>
                                               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a>,
 <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutionException.html" title="class or interface in java.util.concurrent" class="external-link">ExecutionException</a></span></div>
-<div class="block">**使用多线程 (Threads) 并行检查**数组中是否包含非质数。</div>
+<div class="block">**Parallel execution using multiple threads (Threads)** checks if the array contains non-prime numbers.
+ **使用多线程 (Threads) 并行检查**数组中是否包含非质数。</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>numbers</code> - 需要检查的整数数组</dd>
-<dd><code>threadCount</code> - 线程数量</dd>
+<dd><code>numbers</code> - The array of integers to check / 需要检查的整数数组</dd>
+<dd><code>threadCount</code> - The number of threads to use / 线程数量</dd>
 <dt>Returns:</dt>
-<dd>如果数组中存在非质数，返回 true；否则返回 false</dd>
+<dd>true if a non-prime number is found; otherwise, false / 如果数组中存在非质数，返回 true；否则返回 false</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code> - 线程被中断时抛出异常</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutionException.html" title="class or interface in java.util.concurrent" class="external-link">ExecutionException</a></code> - 任务执行异常</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code> - if the thread is interrupted / 当线程被中断时抛出异常</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutionException.html" title="class or interface in java.util.concurrent" class="external-link">ExecutionException</a></code> - if a task execution error occurs / 如果任务执行异常</dd>
 </dl>
 </section>
 </li>
