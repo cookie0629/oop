@@ -19,11 +19,11 @@ public class PrimeCheck {
      * @return true if the number is prime; otherwise, false / 如果是质数返回 true，否则返回 false
      */
     private static boolean isPrime(int n) {
-        if (n < 2) return true;
+        if (n < 2) return false;
         for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) return true;
+            if (n % i == 0) return false;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -35,7 +35,7 @@ public class PrimeCheck {
      */
     public static boolean sequentialHasNonPrime(int[] numbers) {
         for (int num : numbers) {
-            if (isPrime(num)) return true;
+            if (!isPrime(num)) return true;
         }
         return false;
     }
@@ -48,7 +48,7 @@ public class PrimeCheck {
      * @return true if a non-prime number is found; otherwise, false / 如果数组中存在非质数，返回 true；否则返回 false
      */
     public static boolean parallelStreamHasNonPrime(int[] numbers) {
-        return Arrays.stream(numbers).parallel().anyMatch(PrimeCheck::isPrime);
+        return Arrays.stream(numbers).parallel().anyMatch(num -> !isPrime(num));
     }
 
     /**
@@ -64,15 +64,15 @@ public class PrimeCheck {
     public static boolean parallelHasNonPrimeWithThreads(int[] numbers, int threadCount)
             throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
-        int chunkSize = (numbers.length / threadCount) + 1; // Each thread's range size / 每个线程负责的区间大小
+        int chunkSize = numbers.length / threadCount;
         Future<Boolean>[] futures = new Future[threadCount];
 
         for (int i = 0; i < threadCount; i++) {
             final int start = i * chunkSize;
-            final int end = Math.min(start + chunkSize, numbers.length);
+            final int end = (i == threadCount - 1) ? numbers.length : start + chunkSize;
             futures[i] = executor.submit(() -> {
                 for (int j = start; j < end; j++) {
-                    if (isPrime(numbers[j])) return true;
+                    if (!isPrime(numbers[j])) return true;
                 }
                 return false;
             });
@@ -85,3 +85,4 @@ public class PrimeCheck {
         return false;
     }
 }
+
