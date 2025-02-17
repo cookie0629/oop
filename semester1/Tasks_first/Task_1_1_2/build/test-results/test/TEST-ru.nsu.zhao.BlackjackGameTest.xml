@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ru.nsu.zhao.BlackjackGameTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-09-29T07:01:30" hostname="COOKIE" time="0.018">
-  <properties/>
-  <testcase name="testBustCondition()" classname="ru.nsu.zhao.BlackjackGameTest" time="0.018"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
