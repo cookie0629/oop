@@ -1,0 +1,5 @@
+{
+  "maxStorage": 15,
+  "bakerSpeeds": [2, 3, 5],
+  "courierCapacities": [5, 7]
+}
