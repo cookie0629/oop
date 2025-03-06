@@ -5,66 +5,84 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 披萨店测试类 / Pizzeria Test Class
- * 验证披萨店核心功能的单元测试 / Unit tests for core pizzeria functionality
+ * 披萨店测试类，用于测试披萨店的各项功能
+ * Pizzeria test class, used to test the functionalities of the pizzeria
  */
 class PizzeriaTest {
 
     /**
-     * 标准流程测试 / Standard Workflow Test
-     * 验证正常开店-接单-关店流程 / Tests normal open-order-close workflow
+     * 测试披萨店的正常工作流程
+     * Test the standard workflow of the pizzeria
+     *
+     * @throws Exception 如果测试过程中发生异常
+     *                   If an exception occurs during the test
      */
     @Test
-    void testStandartWork() throws Exception {
-        // 初始化披萨店 / Initialize pizzeria
-        Pizzeria pizzeria = new Pizzeria("src/main/resources/test_config.json");
-        pizzeria.start();  // 启动系统 / Start system
+    void testStandardWork() throws Exception {
+        // 创建披萨店实例
+        Pizzeria pizzeria = new Pizzeria("src/main/resources/config.json");
+        pizzeria.start();
 
-        // 模拟10个订单 / Simulate 10 orders
+        // 接受10个订单
         for (int i = 1; i <= 10; i++) {
             pizzeria.acceptOrder(i);
         }
 
-        pizzeria.stop();  // 正常关闭 / Normal shutdown
+        // 停止披萨店
+        pizzeria.stop();
 
-        // 尝试关闭后接单（应被拒绝） / Attempt post-shutdown order (should be rejected)
+        // 尝试接受新订单，应被拒绝
         pizzeria.acceptOrder(11);
+        System.out.println("测试：披萨店关闭后，订单11被拒绝。");
     }
 
     /**
-     * 持久化关闭测试 / Shutdown with Serialization Test
-     * 验证关闭时能保存未完成订单 / Tests saving pending orders during shutdown
+     * 测试披萨店停止并序列化未完成订单的功能
+     * Test the functionality of stopping the pizzeria and serializing unfinished orders
+     *
+     * @throws Exception 如果测试过程中发生异常
+     *                   If an exception occurs during the test
      */
     @Test
     void testStopWithSerialization() throws Exception {
-        Pizzeria pizzeria = new Pizzeria("src/main/resources/test_config.json");
+        // 创建披萨店实例
+        Pizzeria pizzeria = new Pizzeria("src/main/resources/config.json");
         pizzeria.start();
 
-        // 生成测试订单 / Generate test orders
+        // 接受10个订单
         for (int i = 1; i <= 10; i++) {
             pizzeria.acceptOrder(i);
         }
 
-        // 执行持久化关闭 / Perform serialized shutdown
-        pizzeria.stopWithSerialization("src/main/resources/OldOrders");
+        // 停止披萨店并序列化未完成订单
+        String filename = "src/main/resources/OldOrders";
+        pizzeria.stopWithSerialization(filename);
 
-        // 验证持久化文件存在 / Verify serialization file existence
-        File file = new File("src/main/resources/OldOrders");
-        assertTrue(file.exists());
+        // 检查文件是否存在
+        File file = new File(filename);
+        assertTrue(file.exists(), "文件应存在，但未找到: " + filename);
+        System.out.println("测试：未完成订单已成功序列化到文件: " + filename);
     }
 
     /**
-     * 旧订单加载测试 / Old Orders Loading Test
-     * 验证从文件恢复订单的能力 / Tests order restoration from file
+     * 测试从文件加载未完成订单的功能
+     * Test the functionality of loading unfinished orders from a file
+     *
+     * @throws Exception 如果测试过程中发生异常
+     *                   If an exception occurs during the test
      */
     @Test
     void testLoadOldOrders() throws Exception {
-        Pizzeria pizzeria = new Pizzeria("src/main/resources/test_config.json");
+        // 创建披萨店实例
+        Pizzeria pizzeria = new Pizzeria("src/main/resources/config.json");
         pizzeria.start();
 
-        // 加载历史订单 / Load historical orders
-        pizzeria.loadOldOrders("src/main/resources/OldOrders");
+        // 从文件加载未完成订单
+        String filename = "src/main/resources/OldOrders";
+        pizzeria.loadOldOrders(filename);
 
-        pizzeria.stop();  // 正常关闭系统 / Normal shutdown
+        // 停止披萨店
+        pizzeria.stop();
+        System.out.println("测试：从未完成订单文件加载的订单已成功处理。");
     }
 }
