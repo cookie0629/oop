@@ -4,62 +4,67 @@ import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * 仓储管理系统
- * Storage management system
+ * 仓库管理类 / Storage Management Class
+ * 实现带容量限制的线程安全存储 / Implements thread-safe storage with capacity
  */
 public class Storage {
-    private final int maxCapacity;
-    private final Queue<Integer> inventory = new ArrayDeque<>();
-    private final CountDownLatch readinessSignal;
+    private final int capacity;       // 最大容量 / Maximum capacity
+    private final Queue<Integer> storage = new LinkedList<>();  // 存储队列 / Storage queue
+    private final CountDownLatch startLatch;  // 启动同步锁 / Startup synchronization latch
 
-    public Storage(int maxCapacity, CountDownLatch readinessSignal) {
-        this.maxCapacity = maxCapacity;
-        this.readinessSignal = readinessSignal;
+    /**
+     * 构造函数 / Constructor
+     * @param capacity 仓库容量 / Storage capacity
+     */
+    public Storage(int capacity, CountDownLatch startLatch) {
+        this.capacity = capacity;
+        this.startLatch = startLatch;
     }
 
     /**
-     * 存入物品
-     * Store item
-     * @param itemID 物品编号/Item ID
+     * 存入披萨 / Store pizza
+     * @param orderId 订单ID / Order ID
      */
-    public synchronized void storeItem(int itemID) {
-        while (inventory.size() >= maxCapacity) {
+    public synchronized void storePizza(int orderId) {
+        // 等待仓库有空位 / Wait for available space
+        while (storage.size() >= capacity) {
             try {
                 wait();
             } catch (InterruptedException ignored) {}
         }
-        inventory.add(itemID);
-        System.out.printf("[Storage] + Item#%d\n", itemID);
-        notifyAll();
+        storage.add(orderId);
+        System.out.println(orderId + " Пицца на складе.");
+        notifyAll();  // 通知等待线程 / Notify waiting threads
     }
 
     /**
-     * 提取物品
-     * Retrieve items
-     * @param maxAmount 最大提取量/Max retrieval amount
-     * @return 物品列表/Item list
+     * 取出披萨 / Take pizzas
+     * @param maxCount 最大取出数量 / Maximum take count
+     * @return 取出的订单列表 / List of taken orders
      */
-    public synchronized List<Integer> retrieveItems(int maxAmount) {
-        while (inventory.isEmpty()) {
+    public synchronized List<Integer> takePizzas(int maxCount) {
+        // 等待仓库有货 / Wait for available pizzas
+        while (storage.isEmpty()) {
             try {
-                readinessSignal.countDown();
+                startLatch.countDown();  // 同步启动计数 / Synchronize startup count
                 wait();
             } catch (InterruptedException ignored) {}
         }
 
-        List<Integer> result = new ArrayList<>();
-        while (!inventory.isEmpty() && result.size() < maxAmount) {
-            result.add(inventory.poll());
+        // 批量取出 / Batch retrieval
+        List<Integer> taken = new ArrayList<>();
+        while (!storage.isEmpty() && taken.size() < maxCount) {
+            taken.add(storage.poll());
         }
-        notifyAll();
-        return result;
+        notifyAll();  // 通知生产者线程 / Notify producer threads
+        return taken;
     }
 
     /**
-     * 检查库存状态
-     * Check inventory status
+     * 检查空状态 / Check empty status
+     * @return 是否为空 / True if empty
      */
     public synchronized boolean isEmpty() {
-        return inventory.isEmpty();
+        return storage.isEmpty();
     }
 }

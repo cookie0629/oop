@@ -3,11 +3,11 @@ package ru.nsu.zhao;
 import java.util.List;
 
 /**
- * 系统配置参数
- * System configuration parameters
+ * 配置数据类 / Configuration Data Class
+ * 用于加载JSON配置文件 / Used for loading JSON configuration
  */
 public class Config {
-    public int maxStorage;        // 最大存储容量/Max storage capacity
-    public List<Integer> bakerSpeeds;  // 面包师速度列表/Baker speed list
-    public List<Integer> courierCapacities; // 配送员容量列表/Courier capacity list
+    public int storageCapacity;  // 仓库容量 / Storage capacity
+    public List<Integer> bakers;  // 面包师配置列表 / List of baker configurations
+    public List<Integer> couriers;  // 快递员配置列表 / List of courier configurations
 }

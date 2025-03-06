@@ -2,61 +2,65 @@ package ru.nsu.zhao;
 
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 配送服务线程
- * Delivery service thread
+ * 快递员线程类 / Courier Thread Class
+ * 从仓库取货并配送 / Takes pizzas from storage and delivers
  */
 public class Courier extends Thread {
-    private static final AtomicInteger COURIER_COUNTER = new AtomicInteger(1);
-    private final int courierID;
-    private final Storage storageArea;
-    private final int deliveryCapacity;
-    private final AtomicBoolean operationalFlag;
-    private final CountDownLatch readinessSignal;
+    private static final AtomicInteger ID_GENERATOR = new AtomicInteger(1);
+    private final int id;            // 快递员ID / Courier ID
+    private final Storage storage;   // 存储仓库 / Storage facility
+    private final int capacity;      // 最大携带量 / Maximum carrying capacity
+    private final AtomicBoolean isOpen;  // 营业状态标志 / Shop open status flag
+    private final CountDownLatch startLatch; // 启动同步锁 / Startup synchronization latch
 
     /**
-     * 初始化配送员
-     * @param storageArea 存储区域/Storage area
-     * @param capacity 配送容量/Delivery capacity
-     * @param operationalFlag 运营标志/Operational flag
-     * @param readinessSignal 就绪信号/Readiness signal
+     * 构造函数 / Constructor
+     * @param storage 存储仓库 / Storage facility
+     * @param capacity 携带容量 / Carrying capacity
+     * @param isOpen 营业状态标志 / Shop open status flag
+     * @param startLatch 启动同步锁 / Startup synchronization latch
      */
-    public Courier(Storage storageArea, int capacity,
-                   AtomicBoolean operationalFlag, CountDownLatch readinessSignal) {
-        this.courierID = COURIER_COUNTER.getAndIncrement();
-        this.storageArea = storageArea;
-        this.deliveryCapacity = capacity;
-        this.operationalFlag = operationalFlag;
-        this.readinessSignal = readinessSignal;
+    public Courier(Storage storage, int capacity,
+                   AtomicBoolean isOpen, CountDownLatch startLatch) {
+        this.id = ID_GENERATOR.getAndIncrement();
+        this.storage = storage;
+        this.capacity = capacity;
+        this.isOpen = isOpen;
+        this.startLatch = startLatch;
     }
 
+    /**
+     * 主运行逻辑 / Main run logic
+     * 循环配送直到店铺关闭且仓库清空 / Delivers until shop closes and storage empties
+     */
     @Override
     public void run() {
-        while (operationalFlag.get() || !storageArea.isEmpty()) {
-            List<Integer> deliveryBatch = storageArea.retrieveItems(deliveryCapacity);
+        while (isOpen.get() || !storage.isEmpty()) {
+            List<Integer> pizzas = storage.takePizzas(capacity);
+            System.out.println("Курьер " + id + " забрал " + pizzas);
 
-            System.out.printf("[Courier %d] PICKUP %s\n", courierID, deliveryBatch);
             try {
-                Thread.sleep(3000); // 模拟配送时间/Simulate delivery time
+                Thread.sleep(3000);  // 模拟配送时间 / Simulate delivery time
             } catch (InterruptedException ignored) {}
 
-            System.out.printf("[Courier %d] DELIVERED %s\n", courierID, deliveryBatch);
+            System.out.println("Курьер " + id + " доставил " + pizzas);
         }
     }
 
     /**
-     * 安全终止线程
-     * Safely terminate thread
+     * 安全关闭线程 / Safely terminate thread
      */
-    public void shutdown() {
+    public void joinSafely() {
         try {
-            join();
+            join();  // 等待线程结束 / Wait for thread termination
         } catch (InterruptedException ignored) {}
     }
 
-    public CountDownLatch getReadinessSignal() {
-        return readinessSignal;
+    public CountDownLatch getStartLatch() {
+        return startLatch;
     }
 }
