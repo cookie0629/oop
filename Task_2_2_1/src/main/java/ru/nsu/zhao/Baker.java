@@ -68,4 +68,8 @@ public class Baker extends Thread {
             join();
         } catch (InterruptedException ignored) {}
     }
+
+    public CountDownLatch getStartLatch() {
+        return startLatch;
+    }
 }
