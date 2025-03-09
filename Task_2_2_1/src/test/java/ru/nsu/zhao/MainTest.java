@@ -1,118 +1,104 @@
 package ru.nsu.zhao;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import java.io.File;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+import java.util.concurrent.*;
 
 class MainTest {
 
-    /**
-     * 测试配置文件加载 / Test configuration loading
-     */
     @Test
-    void testConfigLoading() throws Exception {
-        // 加载测试配置文件 / Load test config
-        File configFile = Paths.get("C:\\project_oop\\oop\\Task_2_2_1\\src\\main\\java\\ru\\nsu\\zhao\\config.json").toFile();
-        Main.Config config = new ObjectMapper().readValue(configFile, Main.Config.class);
-
-        // 验证配置参数 / Verify configuration values
-        assertArrayEquals(new int[]{2, 3}, config.getBakers());
-        assertArrayEquals(new int[]{5, 5}, config.getCouriers());
-        assertEquals(10, config.getWarehouse_capacity());
-    }
-
-    /**
-     * 测试完整系统流程 / Test full system workflow
-     */
-    @Test
-    void testFullSystemWorkflow() throws Exception {
-        // 重定向标准输出 / Redirect system output
-        System.setOut(new java.io.PrintStream("test_output.log"));
-
-        // 运行主程序 / Run main program
-        Main.main(new String[]{});
-
-        // 验证输出文件内容 / Verify output content
-        String output = java.nio.file.Files.readString(Paths.get("test_output.log"));
-        assertTrue(output.contains("已送达客户"),
-                "应包含完整订单生命周期 / Should contain full order lifecycle");
-
-        // 清理测试文件 / Cleanup test file
-        java.nio.file.Files.deleteIfExists(Paths.get("test_output.log"));
-    }
-
-    /**
-     * 测试线程终止机制 / Test thread termination
-     */
-    @Test
-    void testThreadTermination() throws Exception {
-        Main main = new Main();
-        Main.Config config = new Main.Config();
-        config.setBakers(new int[]{1});
-        config.setCouriers(new int[]{2});
-        config.setWarehouse_capacity(5);
-
-        // 初始化组件 / Initialize components
+    void testOrderQueueBasicOperations() throws InterruptedException {
         OrderQueue queue = new OrderQueue();
-        Warehouse warehouse = new Warehouse(config.getWarehouse_capacity());
+        Order order = new Order(1);
 
-        // 创建并启动线程 / Create and start threads
-        List<Baker> bakers = new ArrayList<>();
-        for (int speed : config.getBakers()) {
-            Baker baker = new Baker(queue, warehouse, speed);
-            bakers.add(baker);
-            baker.start();
-        }
+        // Test add and take
+        queue.add(order);
+        assertEquals(1, queue.take().getId());
 
-        List<Courier> couriers = new ArrayList<>();
-        for (int capacity : config.getCouriers()) {
-            Courier courier = new Courier(warehouse, capacity);
-            couriers.add(courier);
-            courier.start();
-        }
+        // Test closed queue returns null
+        queue.close();
+        assertNull(queue.take());
+    }
 
-        // 添加测试订单 / Add test orders
-        for (int i = 1; i <= 3; i++) {
-            queue.add(new Order(i));
-        }
+    @Test
+    void testWarehouseCapacityBlocking() throws InterruptedException {
+        Warehouse warehouse = new Warehouse(2);
+        Order order1 = new Order(1);
+        Order order2 = new Order(2);
+        Order order3 = new Order(3);
+
+        warehouse.put(order1);
+        warehouse.put(order2);
+
+        // Test put blocking when full
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<?> future = executor.submit(() -> {
+            try {
+                warehouse.put(order3); // Should block
+                fail("Should not reach here");
+            } catch (InterruptedException e) {
+                // Expected interruption
+            }
+        });
+
+        assertThrows(TimeoutException.class, () -> future.get(500, TimeUnit.MILLISECONDS));
+        executor.shutdownNow();
+    }
+
+    @Test
+    void testBakerProcessOrder() throws InterruptedException {
+        OrderQueue queue = new OrderQueue();
+        Warehouse warehouse = new Warehouse(10);
+        Baker baker = new Baker(queue, warehouse, 1); // Speed 1 sec
+
+        queue.add(new Order(1));
         queue.close();
 
-        // 等待线程结束 / Wait for threads
-        for (Baker baker : bakers) {
-            baker.join(2000);
-            assertFalse(baker.isAlive(), "烘焙师线程应已终止 / Baker thread should be terminated");
-        }
+        baker.start();
+        baker.join();
 
-        warehouse.shutdown();
-
-        for (Courier courier : couriers) {
-            courier.join(2000);
-            assertFalse(courier.isAlive(), "快递员线程应已终止 / Courier thread should be terminated");
-        }
+        List<Order> orders = warehouse.take(10);
+        assertEquals(1, orders.size());
+        assertEquals(1, orders.get(0).getId());
     }
 
-    /**
-     * 测试边界条件 / Test boundary conditions
-     */
     @Test
-    void testBoundaryConditions() throws Exception {
-        // 空配置测试 / Empty config test
-        Main.Config emptyConfig = new Main.Config();
-        emptyConfig.setBakers(new int[]{});
-        emptyConfig.setCouriers(new int[]{});
-        emptyConfig.setWarehouse_capacity(0);
+    void testCourierDelivery() throws InterruptedException {
+        Warehouse warehouse = new Warehouse(10);
+        warehouse.put(new Order(1));
+        warehouse.put(new Order(2));
+        warehouse.shutdown();
 
-        // 应正常处理空配置 / Should handle empty config
-        assertDoesNotThrow(() -> {
-            OrderQueue queue = new OrderQueue();
-            Warehouse warehouse = new Warehouse(emptyConfig.getWarehouse_capacity());
-            queue.close();
-            warehouse.shutdown();
-        }, "应处理空配置 / Should handle empty configuration");
+        Courier courier = new Courier(warehouse, 2);
+        courier.start();
+        courier.join();
+
+        // Verify warehouse is empty
+        assertTrue(warehouse.take(1).isEmpty());
+    }
+
+    @Test
+    void testFullIntegration() throws InterruptedException {
+        OrderQueue queue = new OrderQueue();
+        Warehouse warehouse = new Warehouse(2);
+
+        Baker baker = new Baker(queue, warehouse, 0); // Instant processing
+        Courier courier = new Courier(warehouse, 2);
+
+        queue.add(new Order(1));
+        queue.add(new Order(2));
+        queue.close();
+
+        baker.start();
+        courier.start();
+
+        baker.join();
+        warehouse.shutdown();
+        courier.join();
+
+        // Verify all orders processed and delivered
+        assertNull(queue.take());
+        assertTrue(warehouse.take(1).isEmpty());
     }
 }
