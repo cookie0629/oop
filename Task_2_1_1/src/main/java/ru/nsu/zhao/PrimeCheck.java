@@ -33,7 +33,7 @@ public class PrimeCheck {
      * @param numbers The array of integers to check / 需要检查的整数数组
      * @return true if a non-prime number is found; otherwise, false / 如果数组中存在非质数，返回 true；否则返回 false
      */
-    public static boolean sequentialHasComposite(int[] numbers) {
+    public static boolean sequentialHasNonPrime(int[] numbers) {
         for (int num : numbers) {
             if (!isPrime(num)) return true;
         }
@@ -47,7 +47,7 @@ public class PrimeCheck {
      * @param numbers The array of integers to check / 需要检查的整数数组
      * @return true if a non-prime number is found; otherwise, false / 如果数组中存在非质数，返回 true；否则返回 false
      */
-    public static boolean parallelStreamHasComposite(int[] numbers) {
+    public static boolean parallelStreamHasNonPrime(int[] numbers) {
         return Arrays.stream(numbers).parallel().anyMatch(num -> !isPrime(num));
     }
 
@@ -61,7 +61,7 @@ public class PrimeCheck {
      * @throws InterruptedException if the thread is interrupted / 当线程被中断时抛出异常
      * @throws ExecutionException if a task execution error occurs / 如果任务执行异常
      */
-    public static boolean parallelHasCompositeWithThreads(int[] numbers, int threadCount)
+    public static boolean parallelHasNonPrimeWithThreads(int[] numbers, int threadCount)
             throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         int chunkSize = numbers.length / threadCount;
