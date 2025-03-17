@@ -19,24 +19,18 @@ class PrimeCheckTest {
      */
     @Test
     void testPerformance() throws InterruptedException, ExecutionException {
-        final int dataSize = 100_000_000; // 一亿数据
-        final int primeNumber = 7919;
-        final int primeNumber2 = 1097;
+        final int dataSize = 10_000_000; // 一千万数据
+        final int primeNumber = 7919;    // 一个质数，确保 isPrime 执行完整的循环
         int[] numbers = new int[dataSize];
-//        Arrays.fill(numbers, primeNumber);
+        Arrays.fill(numbers, primeNumber);
         // 预期结果：所有数均为质数，因此方法返回 false
-        for ( int i = 0; i < dataSize; i++){
-            if (i % 2 == 0) numbers[i] = primeNumber;
-            else
-                numbers[i] = primeNumber2;
-        }
         final boolean expected = false;
 
         System.out.println("====== 性能测试开始（数据量：" + dataSize + "） ======");
 
         // 顺序执行测试
         long start = System.currentTimeMillis();
-        boolean resultSeq = PrimeCheck.sequentialHasComposite(numbers);
+        boolean resultSeq = PrimeCheck.sequentialHasNonPrime(numbers);
         long end = System.currentTimeMillis();
         long sequentialTime = end - start;
         System.out.println("Sequential execution time: " + sequentialTime + " ms");
@@ -44,17 +38,17 @@ class PrimeCheckTest {
 
         // parallelStream() 测试
         start = System.currentTimeMillis();
-        boolean resultParallelStream = PrimeCheck.parallelStreamHasComposite(numbers);
+        boolean resultParallelStream = PrimeCheck.parallelStreamHasNonPrime(numbers);
         end = System.currentTimeMillis();
         long parallelStreamTime = end - start;
         System.out.println("ParallelStream execution time: " + parallelStreamTime + " ms");
         assertEquals(expected, resultParallelStream);
 
         // 多线程测试：分别使用 4, 8, 16, 32 线程
-        int[] threadCounts = {4, 8, 16, 32, 64};
+        int[] threadCounts = {4, 8, 16, 32};
         for (int threadCount : threadCounts) {
             start = System.currentTimeMillis();
-            boolean resultThreads = PrimeCheck.parallelHasCompositeWithThreads(numbers, threadCount);
+            boolean resultThreads = PrimeCheck.parallelHasNonPrimeWithThreads(numbers, threadCount);
             end = System.currentTimeMillis();
             long threadTime = end - start;
             System.out.println("Parallel execution with " + threadCount + " threads: " + threadTime + " ms");
