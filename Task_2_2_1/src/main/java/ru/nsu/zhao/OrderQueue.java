@@ -15,15 +15,13 @@ public class OrderQueue {
      * 添加订单到队列 / Add order to queue
      * @param order 待添加的订单 / Order to be added
      */
-    public void add(Order order) {
-        synchronized (this) {
-            if (isClosed) {
-                // 队列已关闭，拒绝新订单
-                return;
-            }
-            queue.add(order);
-            notifyAll(); // 唤醒可能等待的消费者线程
+    public synchronized void add(Order order) {
+        if (isClosed) {
+            // 队列已关闭，拒绝新订单
+            return;
         }
+        queue.add(order);
+        notifyAll(); // 唤醒可能等待的消费者线程
     }
 
     /**
@@ -31,25 +29,21 @@ public class OrderQueue {
      * @return 订单对象，若队列关闭且为空则返回 null
      * @throws InterruptedException 当线程被中断时抛出
      */
-    public Order take() throws InterruptedException {
-        synchronized (this) {
-            // 循环检查防止虚假唤醒
-            while (queue.isEmpty() && !isClosed) {
-                wait(); // 队列为空且未关闭时等待
-            }
-            // 队列关闭且为空时返回 null，否则返回订单
-            return queue.isEmpty() ? null : queue.poll();
+    public synchronized Order take() throws InterruptedException {
+        // 循环检查防止虚假唤醒
+        while (queue.isEmpty() && !isClosed) {
+            wait(); // 队列为空且未关闭时等待
         }
+        // 队列关闭且为空时返回 null，否则返回订单
+        return queue.isEmpty() ? null : queue.poll();
     }
 
     /**
      * 关闭订单队列 / Close order queue
      * 停止接收新订单，并唤醒所有等待线程
      */
-    public void close() {
-        synchronized (this) {
-            isClosed = true;
-            notifyAll(); // 唤醒所有等待的消费者线程
-        }
+    public synchronized void close() {
+        isClosed = true;
+        notifyAll(); // 唤醒所有等待的消费者线程
     }
 }

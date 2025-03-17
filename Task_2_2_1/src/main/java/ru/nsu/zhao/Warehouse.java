@@ -28,14 +28,12 @@ public class Warehouse {
      * @param order 待存储的订单 / Order to be stored
      * @throws InterruptedException 当线程被中断时抛出 / Thrown when thread is interrupted
      */
-    public void put(Order order) throws InterruptedException {
-        synchronized (this) {
-            while (storage.size() >= capacity) {
-                wait();
-            }
-            storage.add(order);
-            notifyAll();
+    public synchronized void put(Order order) throws InterruptedException {
+        while (storage.size() >= capacity) {
+            wait();
         }
+        storage.add(order);
+        notifyAll();
     }
 
     /**
@@ -45,32 +43,28 @@ public class Warehouse {
      * @return 订单列表 / List of orders
      * @throws InterruptedException 当线程被中断时抛出 / Thrown when thread is interrupted
      */
-    public List<Order> take(int max) throws InterruptedException {
-        synchronized (this) {
-            while (storage.isEmpty() && !isStopped) {
-                wait();
-            }
-            if (storage.isEmpty() && isStopped) {
-                return new ArrayList<>();
-            }
-            List<Order> orders = new ArrayList<>();
-            int count = Math.min(max, storage.size());
-            for (int i = 0; i < count; i++) {
-                orders.add(storage.poll());
-            }
-            notifyAll();
-            return orders;
+    public synchronized List<Order> take(int max) throws InterruptedException {
+        while (storage.isEmpty() && !isStopped) {
+            wait();
         }
+        if (storage.isEmpty() && isStopped) {
+            return new ArrayList<>();
+        }
+        List<Order> orders = new ArrayList<>();
+        int count = Math.min(max, storage.size());
+        for (int i = 0; i < count; i++) {
+            orders.add(storage.poll());
+        }
+        notifyAll();
+        return orders;
     }
 
     /**
      * 关闭仓库 / Shutdown warehouse
      * 停止所有仓储操作 / Stop all warehouse operations
      */
-    public void shutdown() {
-        synchronized (this) {
-            isStopped = true;
-            notifyAll();
-        }
+    public synchronized void shutdown() {
+        isStopped = true;
+        notifyAll();
     }
 }
