@@ -14,7 +14,7 @@ class MainTest {
 
         // Test add and take
         queue.add(order);
-        assertEquals(1, queue.take().id());
+        assertEquals(1, queue.take().getId());
 
         // Test closed queue returns null
         queue.close();
@@ -60,7 +60,7 @@ class MainTest {
 
         List<Order> orders = warehouse.take(10);
         assertEquals(1, orders.size());
-        assertEquals(1, orders.get(0).id());
+        assertEquals(1, orders.get(0).getId());
     }
 
     @Test

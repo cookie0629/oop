@@ -32,11 +32,11 @@ public class Courier extends Thread {
                     break;
                 }
                 for (Order order : orders) {
-                    System.out.println("[" + order.id() + "] 正在配送");
+                    System.out.println("[" + order.getId() + "] 正在配送");
                 }
                 Thread.sleep(1000);
                 for (Order order : orders) {
-                    System.out.println("[" + order.id() + "] 已送达客户");
+                    System.out.println("[" + order.getId() + "] 已送达客户");
                 }
             }
         } catch (InterruptedException e) {
