@@ -2,18 +2,13 @@ package ru.nsu.zhao;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 线程安全订单队列 / Thread-safe Order Queue
- * 实现生产者-消费者模式 / Implements producer-consumer pattern
+ * 基于 synchronized/wait/notify 实现生产者-消费者模式
  */
 public class OrderQueue {
     private final Queue<Order> queue = new LinkedList<>();
-    private final Lock lock = new ReentrantLock();
-    private final Condition condition = lock.newCondition();
     private boolean isClosed = false;
 
     /**
@@ -21,45 +16,40 @@ public class OrderQueue {
      * @param order 待添加的订单 / Order to be added
      */
     public void add(Order order) {
-        lock.lock();
-        try {
-            if (!isClosed) {
-                queue.add(order);
-                condition.signalAll();
+        synchronized (this) {
+            if (isClosed) {
+                // 队列已关闭，拒绝新订单
+                return;
             }
-        } finally {
-            lock.unlock();
+            queue.add(order);
+            notifyAll(); // 唤醒可能等待的消费者线程
         }
     }
 
     /**
      * 从队列获取订单 / Take order from queue
-     * @return 获取的订单对象 / Retrieved order object
-     * @throws InterruptedException 当线程被中断时抛出 / Thrown when thread is interrupted
+     * @return 订单对象，若队列关闭且为空则返回 null
+     * @throws InterruptedException 当线程被中断时抛出
      */
     public Order take() throws InterruptedException {
-        lock.lock();
-        try {
+        synchronized (this) {
+            // 循环检查防止虚假唤醒
             while (queue.isEmpty() && !isClosed) {
-                condition.await();
+                wait(); // 队列为空且未关闭时等待
             }
+            // 队列关闭且为空时返回 null，否则返回订单
             return queue.isEmpty() ? null : queue.poll();
-        } finally {
-            lock.unlock();
         }
     }
 
     /**
      * 关闭订单队列 / Close order queue
-     * 停止接收新订单 / Stop accepting new orders
+     * 停止接收新订单，并唤醒所有等待线程
      */
     public void close() {
-        lock.lock();
-        try {
+        synchronized (this) {
             isClosed = true;
-            condition.signalAll();
-        } finally {
-            lock.unlock();
+            notifyAll(); // 唤醒所有等待的消费者线程
         }
     }
 }
