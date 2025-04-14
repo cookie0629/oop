@@ -15,26 +15,34 @@ import javafx.scene.text.Font;
 
 import java.awt.*;
 
+/**
+ * 游戏控制器，处理游戏逻辑和用户交互
+ * Game controller handling game logic and user interaction
+ */
 public class GameController {
-    @FXML private VBox startScreen;
-    @FXML private TextField scoreInput;
-    @FXML private Canvas gameCanvas;
-    @FXML private Label scoreLabel;
-    @FXML private Button restartButton;
+    @FXML private VBox startScreen;       // 开始界面 / Start screen
+    @FXML private TextField scoreInput;   // 分数输入框 / Score input field
+    @FXML private Canvas gameCanvas;      // 游戏画布 / Game canvas
+    @FXML private Label scoreLabel;       // 分数标签 / Score label
+    @FXML private Button restartButton;   // 重新开始按钮 / Restart button
 
-    private Image appleImage = new Image(getClass().getResourceAsStream("/apple.png"));
+    private Image appleImage = new Image(getClass().getResourceAsStream("/apple.png")); // 食物图片 / Food image
 
-    private static final int CELL_SIZE = 20;
-    private static final int WIDTH = 30;
-    private static final int HEIGHT = 20;
+    private static final int CELL_SIZE = 20; // 单元格大小 / Cell size in pixels
+    private static final int WIDTH = 30;    // 游戏区域宽度(单元格数) / Game field width in cells
+    private static final int HEIGHT = 20;    // 游戏区域高度(单元格数) / Game field height in cells
 
-    private GameField gameField;
-    private Snake snake;
-    private boolean running;
-    private Thread gameLoop;
-    private boolean gameOverDisplayed = false;
-    private int scoreToWin;
+    private GameField gameField;  // 游戏区域 / Game field
+    private Snake snake;         // 蛇 / Snake
+    private boolean running;      // 游戏运行状态 / Game running state
+    private Thread gameLoop;      // 游戏循环线程 / Game loop thread
+    private boolean gameOverDisplayed = false; // 游戏结束显示状态 / Game over display state
+    private int scoreToWin;       // 胜利所需分数 / Score needed to win
 
+    /**
+     * 开始游戏
+     * Start the game
+     */
     @FXML
     private void startGame() {
         try {
@@ -51,10 +59,14 @@ public class GameController {
 
             restartGame();
         } catch (NumberFormatException e) {
-            scoreInput.setText("Неверный ввод!");
+            scoreInput.setText("输入无效"); // 输入无效 / Invalid input
         }
     }
 
+    /**
+     * 初始化方法
+     * Initialize method
+     */
     @FXML
     public void initialize() {
         showStartScreen();
@@ -64,6 +76,10 @@ public class GameController {
         gameCanvas.setOnKeyPressed(this::handleKeyPress);
     }
 
+    /**
+     * 重新开始游戏
+     * Restart the game
+     */
     private void restartGame() {
         gameField = new GameField(WIDTH, HEIGHT);
         snake = new Snake(WIDTH / 2, HEIGHT / 2, gameField);
@@ -75,7 +91,7 @@ public class GameController {
 
         gameLoop = new Thread(() -> {
             long lastUpdate = 0;
-            long MOVE_INTERVAL = 150_000_000;
+            long MOVE_INTERVAL = 150_000_000; // 移动间隔(纳秒) / Movement interval in nanoseconds
 
             while (running) {
                 long now = System.nanoTime();
@@ -98,6 +114,11 @@ public class GameController {
         gameLoop.start();
     }
 
+    /**
+     * 更新游戏状态
+     * Update game state
+     * @param delta 时间增量 / Time delta
+     */
     private void updateGame(int delta) {
         if (!running) return;
 
@@ -130,6 +151,10 @@ public class GameController {
         }
     }
 
+    /**
+     * 完整绘制游戏画面
+     * Full draw of the game
+     */
     private void fullDraw() {
         GraphicsContext gc = gameCanvas.getGraphicsContext2D();
         gc.setFill(Color.ALICEBLUE);
@@ -147,6 +172,12 @@ public class GameController {
         scoreLabel.setText("Score: " + snake.getBody().size());
     }
 
+    /**
+     * 增量绘制游戏画面
+     * Incremental draw of the game
+     * @param clearTail 需要清除的尾部 / Tail to clear
+     * @param newFood 新生成的食物 / New food generated
+     */
     private void draw(Point clearTail, Point newFood) {
         GraphicsContext gc = gameCanvas.getGraphicsContext2D();
         if(clearTail != null) {
@@ -162,6 +193,10 @@ public class GameController {
         scoreLabel.setText("Score: " + snake.getBody().size());
     }
 
+    /**
+     * 绘制游戏结束画面
+     * Draw game over screen
+     */
     private void drawGameOver() {
         gameOverDisplayed = true;
         GraphicsContext gc = gameCanvas.getGraphicsContext2D();
@@ -170,6 +205,11 @@ public class GameController {
         gc.fillText("Game Over", gameCanvas.getWidth() / 3, gameCanvas.getHeight() / 2);
     }
 
+    /**
+     * 处理键盘输入
+     * Handle keyboard input
+     * @param event 键盘事件 / Key event
+     */
     private void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
             case UP, W -> snake.changeDirection(0, -1);
@@ -183,6 +223,10 @@ public class GameController {
         return gameOverDisplayed;
     }
 
+    /**
+     * 显示开始界面
+     * Show start screen
+     */
     private void showStartScreen() {
         Platform.runLater(() -> {
             startScreen.setVisible(true);
@@ -193,16 +237,23 @@ public class GameController {
         });
     }
 
+    /**
+     * 停止游戏循环
+     * Stop game loop
+     */
     private void gameLoopStop() {
         gameLoop.interrupt();
         gameLoop = null;
     }
 
+    /**
+     * 绘制胜利画面
+     * Draw victory screen
+     */
     private void drawVictory() {
         GraphicsContext gc = gameCanvas.getGraphicsContext2D();
         gc.setFill(Color.GREENYELLOW);
         gc.setFont(new Font(30));
         gc.fillText("Victory", gameCanvas.getWidth() / 3, gameCanvas.getHeight() / 2);
     }
-
 }

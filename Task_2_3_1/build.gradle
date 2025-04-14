@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
 group = 'ru.nsu.zhao'
@@ -42,5 +42,5 @@ jacocoTestReport {
 }
 
 application {
-    mainClass = 'snakegame.SnakeGame'
+    mainClass = 'SnakeGame'
 }

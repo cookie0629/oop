@@ -6,10 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * 主应用程序类
+ * Main application class
+ */
 public class SnakeGame extends Application {
 
     public static void main(String[] args) {
-        launch();
+        launch(); // 启动JavaFX应用 / Launch JavaFX application
     }
 
     @Override
@@ -19,10 +23,9 @@ public class SnakeGame extends Application {
 
         primaryStage.setTitle("Snake Game");
         Image image = new Image(getClass().getResourceAsStream("/icon.jpg"));
-        primaryStage.getIcons().add(image);
+        primaryStage.getIcons().add(image); // 设置窗口图标 / Set window icon
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        primaryStage.setResizable(false); // 禁止调整窗口大小 / Disable window resizing
+        primaryStage.show(); // 显示窗口 / Show window
     }
-
 }
