@@ -42,5 +42,5 @@ jacocoTestReport {
 }
 
 application {
-    mainClass = 'SnakeGame'
+    mainClass = 'ru.nsu.zhao.SnakeGame'
 }
