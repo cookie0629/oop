@@ -12,7 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
+import org.apache.commons.lang3.math.NumberUtils;
 import java.awt.*;
 
 /**
@@ -31,6 +31,7 @@ public class GameController {
     private static final int CELL_SIZE = 20; // 单元格大小 / Cell size in pixels
     private static final int WIDTH = 30;    // 游戏区域宽度(单元格数) / Game field width in cells
     private static final int HEIGHT = 20;    // 游戏区域高度(单元格数) / Game field height in cells
+    private static final long MOVE_INTERVAL = 150_000_000L; // 移动间隔(纳秒) / Movement interval in nanoseconds
 
     private GameField gameField;  // 游戏区域 / Game field
     private Snake snake;         // 蛇 / Snake
@@ -46,7 +47,7 @@ public class GameController {
     @FXML
     private void startGame() {
         try {
-            scoreToWin = Integer.parseInt(scoreInput.getText());
+            scoreToWin = NumberUtils.toInt(scoreInput.getText(), 0);
             if (scoreToWin <= 0 || scoreToWin >= 600) {
                 throw new NumberFormatException();
             }
@@ -91,7 +92,6 @@ public class GameController {
 
         gameLoop = new Thread(() -> {
             long lastUpdate = 0;
-            long MOVE_INTERVAL = 150_000_000; // 移动间隔(纳秒) / Movement interval in nanoseconds
 
             while (running) {
                 long now = System.nanoTime();
