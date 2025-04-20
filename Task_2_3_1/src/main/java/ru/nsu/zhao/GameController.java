@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * 游戏控制器，处理游戏逻辑和用户交互
@@ -26,7 +27,7 @@ public class GameController {
     @FXML private Label scoreLabel;       // 分数标签 / Score label
     @FXML private Button restartButton;   // 重新开始按钮 / Restart button
 
-    private Image appleImage = new Image(getClass().getResourceAsStream("/apple.png")); // 食物图片 / Food image
+    private final Image appleImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/apple.png"))); // 食物图片 / Food image
 
     private static final int CELL_SIZE = 20; // 单元格大小 / Cell size in pixels
     private static final int WIDTH = 30;    // 游戏区域宽度(单元格数) / Game field width in cells
@@ -71,7 +72,7 @@ public class GameController {
     @FXML
     public void initialize() {
         showStartScreen();
-        restartButton.setOnAction(e -> showStartScreen());
+        restartButton.setOnAction(_ -> showStartScreen());
         restartButton.setFocusTraversable(false);
         gameCanvas.setFocusTraversable(true);
         gameCanvas.setOnKeyPressed(this::handleKeyPress);
@@ -100,7 +101,7 @@ public class GameController {
 
                     if (lastUpdate == 0) {
                         computedDelta = 1;
-                        Platform.runLater(() -> fullDraw());
+                        Platform.runLater(this::fullDraw);
                     }
 
                     lastUpdate = now;
@@ -219,9 +220,6 @@ public class GameController {
         }
     }
 
-    public boolean isGameOverDisplayed() {
-        return gameOverDisplayed;
-    }
 
     /**
      * 显示开始界面
@@ -255,5 +253,9 @@ public class GameController {
         gc.setFill(Color.GREENYELLOW);
         gc.setFont(new Font(30));
         gc.fillText("Victory", gameCanvas.getWidth() / 3, gameCanvas.getHeight() / 2);
+    }
+
+    public boolean isGameOverDisplayed() {
+        return gameOverDisplayed;
     }
 }
