@@ -32,10 +32,10 @@ public class Baker extends Thread {
                 if (order == null) {
                     break;
                 }
-                System.out.println("[" + order.id() + "] 准备中");
+                System.out.println("[" + order.getId() + "] 准备中");
                 Thread.sleep(speed * 1000L);
                 warehouse.put(order);
-                System.out.println("[" + order.id() + "] 已存入仓库");
+                System.out.println("[" + order.getId() + "] 已存入仓库");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
