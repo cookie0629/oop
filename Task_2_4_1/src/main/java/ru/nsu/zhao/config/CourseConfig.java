@@ -6,13 +6,13 @@ import groovy.lang.Closure;
 import java.util.*;
 
 /**
- * 课程配置类 / Course configuration class
+ * 课程配置类（简化版，移除了里程碑功能）
+ * Course configuration class (simplified, without milestones)
  */
 public class CourseConfig {
     private final List<Task> tasks = new ArrayList<>();          // 任务列表 / Task list
     private final List<Group> groups = new ArrayList<>();         // 小组列表 / Group list
     private final List<Assignment> assignments = new ArrayList<>(); // 作业分配 / Assignments
-    private final List<Milestone> milestones = new ArrayList<>().reversed(); // 里程碑 / Milestones
     private final Map<String, Object> settings = new HashMap<>(); // 系统设置 / System settings
 
     // 配置任务DSL方法 / DSL method for tasks configuration
@@ -68,17 +68,6 @@ public class CourseConfig {
         closure.call();
     }
 
-    // 配置里程碑DSL方法 / DSL method for milestones configuration
-    public void milestones(Closure<?> closure) {
-        closure.setDelegate(new Object() {
-            public void milestone(String name, String date) {
-                milestones.add(new Milestone(name, date));
-            }
-        });
-        closure.setResolveStrategy(Closure.DELEGATE_ONLY);
-        closure.call();
-    }
-
     // 配置系统设置DSL方法 / DSL method for system settings
     public void settings(Closure<?> closure) {
         closure.setDelegate(settings);
@@ -109,6 +98,5 @@ public class CourseConfig {
     public List<Task> getTasks() { return tasks; }
     public List<Group> getGroups() { return groups; }
     public List<Assignment> getAssignments() { return assignments; }
-    public List<Milestone> getMilestones() { return milestones; }
     public Map<String, Object> getSettings() { return settings; }
 }
