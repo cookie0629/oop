@@ -161,7 +161,7 @@ public class HtmlReportDataBuilder {
     }
 
     // 根据总分确定评级 / Determine grade based on total score
-    private String determineGrade(double total) {
+    String determineGrade(double total) {
         if (total >= 5) return "отлично";
         if (total >= 4) return "хорошо";
         if (total >= 3) return "удовл.";
@@ -169,7 +169,7 @@ public class HtmlReportDataBuilder {
     }
 
     // 格式化分数显示 / Format score display
-    private String formatScore(double score) {
+    String formatScore(double score) {
         if (score == Math.floor(score)) {
             return String.valueOf((int) score);
         } else {
