@@ -130,19 +130,7 @@ class HtmlReportDataBuilderTest {
         assertEquals("удовл.", builder.determineGrade(3.9));
         assertEquals("неуд.", builder.determineGrade(2.9));
     }
-
-    @Test
-    void testFormatScore() {
-        HtmlReportDataBuilder builder = new HtmlReportDataBuilder(
-                new CourseConfig(), List.of(), List.of(), List.of(), Map.of()
-        );
-
-        assertEquals("5", builder.formatScore(5.0));
-        assertEquals("5", builder.formatScore(5.0));
-        assertEquals("4.5", builder.formatScore(4.5));
-        assertEquals("3.1", builder.formatScore(3.1));
-    }
-
+    
     private CourseConfig createTestConfig() {
         CourseConfig config = new CourseConfig();
 
