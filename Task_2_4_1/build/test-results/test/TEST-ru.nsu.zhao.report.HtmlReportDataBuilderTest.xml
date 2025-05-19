@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.nsu.zhao.report.HtmlReportDataBuilderTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-05-12T07:41:11" hostname="COOKIE" time="0.107">
+  <properties/>
+  <testcase name="testBuildGroupSummaryData()" classname="ru.nsu.zhao.report.HtmlReportDataBuilderTest" time="0.1"/>
+  <testcase name="testBuildDetailedReportData()" classname="ru.nsu.zhao.report.HtmlReportDataBuilderTest" time="0.003"/>
+  <testcase name="testDetermineGrade()" classname="ru.nsu.zhao.report.HtmlReportDataBuilderTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="file://D:/Users/23893/Downloads/openjfx-24_windows-x64_bin-sdk/javafx-sdk-24/lib" />
+      <root url="jar://D:/Users/23893/Downloads/commons-lang3-3.17.0-bin/commons-lang3-3.17.0/commons-lang3-3.17.0-javadoc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/Users/23893/Downloads/openjfx-24_windows-x64_bin-sdk/javafx-sdk-24/lib" recursive="false" />
+  </library>
+</component>
