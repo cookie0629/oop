@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.zhao","l":"Main"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.zhao","l":"DistributedPrimeChecker"},{"p":"ru.nsu.zhao","l":"LoggingInterface"},{"p":"ru.nsu.zhao","l":"NumberBatch"},{"p":"ru.nsu.zhao","l":"PrimeValidationServer"},{"p":"ru.nsu.zhao","l":"PrimeValidationWorker"},{"p":"ru.nsu.zhao","l":"TerminalLogger"}];updateSearchResults();

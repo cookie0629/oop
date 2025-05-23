@@ -15,7 +15,11 @@
 <script type="text/javascript" src="../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="package-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../";
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
+var pathtoroot = "../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -62,12 +66,42 @@ loadScripts(document, 'script');</script>
 <ul class="summary-list">
 <li>
 <div id="class-summary">
-<div class="caption"><span>Classes</span></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button></div>
+<div id="class-summary.tabpanel" role="tabpanel" aria-labelledby="class-summary-tab0">
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Main.html" title="class in ru.nsu.zhao">Main</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DistributedPrimeChecker.html" title="class in ru.nsu.zhao">DistributedPrimeChecker</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Distributed Prime Number Checker System
+ 分布式素数检查系统</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="LoggingInterface.html" title="interface in ru.nsu.zhao">LoggingInterface</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Interface for logging messages
+ 日志记录接口</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="NumberBatch.html" title="class in ru.nsu.zhao">NumberBatch</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Data container for number batches
+ 数字批次数据容器</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PrimeValidationServer.html" title="class in ru.nsu.zhao">PrimeValidationServer</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Server for distributing prime validation tasks
+ 素数验证任务分发服务器</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PrimeValidationWorker.html" title="class in ru.nsu.zhao">PrimeValidationWorker</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Worker node for prime validation
+ 素数验证工作节点</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="TerminalLogger.html" title="class in ru.nsu.zhao">TerminalLogger</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Console output logger implementation
+ 控制台日志记录器实现</div>
+</div>
+</div>
 </div>
 </div>
 </li>
