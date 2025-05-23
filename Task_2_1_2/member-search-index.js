@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"ru.nsu.zhao","c":"Main","l":"Main()","u":"%3Cinit%3E()"},{"p":"ru.nsu.zhao","c":"Main","l":"main(String[])","u":"main(java.lang.String[])"},{"p":"ru.nsu.zhao","c":"Main","l":"sum(int, int)","u":"sum(int,int)"}];updateSearchResults();
